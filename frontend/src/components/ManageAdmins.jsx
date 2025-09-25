@@ -1,5 +1,3 @@
-// src/components/ManageAdmins.jsx (קובץ מלא ומעודכן)
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
@@ -14,32 +12,36 @@ import {
     ListItem,
     ListItemText,
     Divider,
-    Chip
+    Chip,
+    IconButton
 } from '@mui/material';
-// import { api } from '../api';
+import DeleteIcon from '@mui/icons-material/Delete';
+// The 'api' module is assumed to be configured for network requests.
+import { fetchAdmins, addAdmin, deleteAdmin } from '../api';
 
 function ManageAdmins() {
     const { t } = useTranslation();
-    const [admins, setAdmins] = useState([]); // State חדש לשמירת רשימת המנהלים
+    // State to hold the list of administrators
+    const [admins, setAdmins] = useState([]);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    // פונקציה למשיכת רשימת המנהלים מהשרת
-    const fetchAdmins = useCallback(async () => {
+    // Function to fetch the list of admins from the server
+    const fetchAdminsList = useCallback(async () => {
         try {
-            const response = await api.get('/admins');
-            setAdmins(response.data);
+            const response = await fetchAdmins();
+            setAdmins(response);
         } catch (err) {
             setError(t('manage_admins.fetch_error'));
         }
     }, [t]);
 
-    // useEffect שירוץ פעם אחת כשהקומפוננטה נטענת
+    // useEffect that runs once when the component loads
     useEffect(() => {
-        fetchAdmins();
-    }, [fetchAdmins]);
+        fetchAdminsList();
+    }, [fetchAdminsList]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -57,13 +59,30 @@ function ManageAdmins() {
 
         try {
             const adminData = { username, password };
-            await api.post('/admins', adminData);
+            await addAdmin(adminData);
             setSuccess(t('manage_admins.form.success_message'));
             setUsername('');
             setPassword('');
-            fetchAdmins(); // <-- רענון הרשימה לאחר הוספה מוצלחת
+            fetchAdminsList(); // Refresh the list after a successful addition
         } catch (err) {
             const errorMessage = err.response?.data?.message || t('manage_admins.form.error_generic');
+            setError(errorMessage);
+        }
+    };
+
+    // New function to handle administrator deletion
+    const handleDelete = async (adminId) => {
+        // Here we can add a confirmation dialog before deletion
+        // if (!window.confirm(t('manage_admins.delete_confirm'))) {
+        //     return;
+        // }
+
+        try {
+            await deleteAdmin(adminId);
+            setSuccess(t('manage_admins.delete_success'));
+            fetchAdminsList(); // Refresh the list after successful deletion
+        } catch (err) {
+            const errorMessage = err.response?.data?.message || t('manage_admins.delete_error');
             setError(errorMessage);
         }
     };
@@ -74,7 +93,7 @@ function ManageAdmins() {
                 {t('manage_admins.title')}
             </Typography>
 
-            {/* טופס הוספת מנהל */}
+            {/* Admin add form */}
             <Paper sx={{ p: 3, mb: 4 }}>
                 <Typography variant="h5" gutterBottom>
                     {t('manage_admins.add_new_title')}
@@ -96,7 +115,7 @@ function ManageAdmins() {
                 </Box>
             </Paper>
 
-            {/* הצגת רשימת מנהלים קיימים */}
+            {/* Displaying the list of existing admins */}
             <Paper sx={{ p: 3 }}>
                 <Typography variant="h5" gutterBottom>
                     {t('manage_admins.existing_admins_title')}
@@ -104,7 +123,13 @@ function ManageAdmins() {
                 <List>
                     {admins.map((admin, index) => (
                         <React.Fragment key={admin.id}>
-                            <ListItem>
+                            <ListItem
+                                secondaryAction={
+                                    <IconButton edge="end" aria-label="delete" onClick={() => handleDelete(admin.id)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                }
+                            >
                                 <ListItemText
                                     primary={admin.username}
                                     secondary={t('manage_admins.role')}

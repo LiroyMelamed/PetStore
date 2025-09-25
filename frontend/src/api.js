@@ -116,7 +116,7 @@ export const deleteCategory = async (id) => {
 // --- Admin API Calls ---
 export const fetchAdmins = async () => {
     try {
-        const response = await fetch(`${API_URL}/admins`);
+        const response = await fetch(`${API_URL}/admins`, { headers: authHeader() });
         if (!response.ok) {
             throw new Error('Failed to fetch admins');
         }
@@ -127,12 +127,15 @@ export const fetchAdmins = async () => {
     }
 };
 
-export const addAdmin = async (email) => {
+export const addAdmin = async (adminData) => {
     try {
         const response = await fetch(`${API_URL}/admins`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email }),
+            headers: {
+                'Content-Type': 'application/json',
+                ...authHeader(),
+            },
+            body: JSON.stringify(adminData),
         });
         if (!response.ok) {
             throw new Error('Failed to add admin');
@@ -144,3 +147,18 @@ export const addAdmin = async (email) => {
     }
 };
 
+export const deleteAdmin = async (id) => {
+    try {
+        const response = await fetch(`${API_URL}/admins/${id}`, {
+            method: 'DELETE',
+            headers: authHeader(),
+        });
+        if (!response.ok) {
+            throw new Error('Failed to delete admin');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error deleting admin:', error);
+        throw error;
+    }
+};
