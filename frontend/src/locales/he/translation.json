@@ -1,0 +1,87 @@
+{
+    "common": {
+        "admin_panel_title": "Pet Store Admin Panel",
+        "edit_button": "Edit",
+        "delete_button": "Delete",
+        "cancel_button": "Cancel",
+        "save_changes_button": "Save Changes",
+        "add_button": "Add",
+        "delete_confirmation_title": "Confirm Deletion",
+        "delete_confirmation_message": "Are you sure you want to permanently delete this {{item}}?",
+        "confirm_button": "Confirm",
+        "product": "product",
+        "category": "category"
+    },
+    "login": {
+        "title": "Login",
+        "username_label": "Username",
+        "password_label": "Password",
+        "submit_button": "Login"
+    },
+    "register": {
+        "title": "Register",
+        "username_label": "Username",
+        "password_label": "Password",
+        "submit_button": "Register"
+    },
+    "logout_button": "Logout",
+    "dashboard": {
+        "title": "Admin Dashboard",
+        "welcome_message": "Welcome to the admin system! Here you can manage products, categories, and orders.",
+        "menu": {
+            "products": "Manage Products",
+            "categories": "Manage Categories",
+            "orders": "Manage Orders",
+            "manage_admins": "Manage Admins"
+        }
+    },
+    "product_manager": {
+        "title": "Product Management",
+        "welcome_message": "Here you can add, update, and delete products.",
+        "add_button": "Add Product",
+        "table": {
+            "name": "Product Name",
+            "price": "Price",
+            "stock": "Stock",
+            "actions": "Actions"
+        },
+        "error": "An error occurred while loading products."
+    },
+    "product_form": {
+        "add_title": "Add New Product",
+        "edit_title": "Edit Product",
+        "success_create": "Product created successfully!",
+        "success_update": "Product updated successfully!",
+        "fields": {
+            "name": "Product Name",
+            "description": "Description",
+            "price": "Price",
+            "stock": "Stock",
+            "imageUrl": "Image URL",
+            "category": "Category",
+            "seoTitle": "SEO Title",
+            "seoDescription": "SEO Description"
+        }
+    },
+    "category_manager": {
+        "title": "Category Management",
+        "welcome_message": "Here you can add, update, and delete categories.",
+        "add_button": "Add Category",
+        "table": {
+            "name": "Category Name",
+            "actions": "Actions"
+        },
+        "error": "An error occurred while loading categories."
+    },
+    "category_form": {
+        "add_title": "Add New Category",
+        "edit_title": "Edit Category",
+        "success_create": "Category created successfully!",
+        "success_update": "Category updated successfully!",
+        "fields": {
+            "name": "Category Name",
+            "seoTitle": "SEO Title",
+            "seoDescription": "SEO Description"
+        }
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "common": {
+        "admin_panel_title": "Pet Store Admin Panel",
+        "edit_button": "Edit",
+        "delete_button": "Delete"
+    },
+    "login": {
+        "title": "Login",
+        "username_label": "Username",
+        "password_label": "Password",
+        "submit_button": "Login"
+    },
+    "register": {
+        "title": "Register",
+        "username_label": "Username",
+        "password_label": "Password",
+        "submit_button": "Register"
+    },
+    "logout_button": "Logout",
+    "dashboard": {
+        "title": "Admin Dashboard",
+        "welcome_message": "Welcome to the admin system! Here you can manage products, categories, and orders.",
+        "menu": {
+            "products": "Manage Products",
+            "categories": "Manage Categories",
+            "orders": "Manage Orders",
+            "manage_admins": "Manage Admins"
+        }
+    },
+    "product_manager": {
+        "title": "Product Management",
+        "welcome_message": "Here you can add, update, and delete products.",
+        "add_button": "Add Product",
+        "table": {
+            "name": "Product Name",
+            "price": "Price",
+            "stock": "Stock",
+            "actions": "Actions"
+        },
+        "error": "An error occurred while loading products."
+    },
+    "category_manager": {
+        "title": "Category Management",
+        "welcome_message": "Here you can add, update, and delete categories."
+    }
+}

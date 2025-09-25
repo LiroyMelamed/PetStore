@@ -1,0 +1,48 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dependency directories
+node_modules/
+.pnp/
+.pnp.js
+
+# Testing
+/coverage
+/.nyc_output
+/test-report/
+
+# Production build files
+/dist
+/build
+
+# Vite-specific
+.vite/
+
+# Mac
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Other
+.cache/
+.npm/
+.eslintcache
+.stylelintcache
