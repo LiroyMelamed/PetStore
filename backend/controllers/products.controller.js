@@ -1,64 +1,70 @@
 const productService = require("../services/products.service");
 
-// GET /api/products
-async function getAll(req, res, next) {
+async function getAllProducts(req, res) {
     try {
         const products = await productService.getAllProducts();
         res.json(products);
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
-// GET /api/products/:id
-async function getById(req, res, next) {
+async function getProductById(req, res) {
     try {
-        const product = await productService.getProductById(req.params.id);
+        const { id } = req.params;
+        const product = await productService.getProductById(id);
         if (!product) return res.status(404).json({ error: "Product not found" });
         res.json(product);
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
-// POST /api/products
-async function create(req, res, next) {
+async function createProduct(req, res) {
     try {
-        const { name, description, price, category_id, stock } = req.body;
-        const product = await productService.createProduct({ name, description, price, category_id, stock });
+        const product = await productService.createProduct(req.body);
         res.status(201).json(product);
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
-// PUT /api/products/:id
-async function update(req, res, next) {
+async function updateProduct(req, res) {
     try {
-        const { name, description, price, category_id, stock } = req.body;
-        const product = await productService.updateProduct(req.params.id, { name, description, price, category_id, stock });
-        if (!product) return res.status(404).json({ error: "Product not found" });
+        const { id } = req.params;
+        const product = await productService.updateProduct(id, req.body);
         res.json(product);
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
-// DELETE /api/products/:id
-async function remove(req, res, next) {
+async function deleteProduct(req, res) {
     try {
-        const product = await productService.deleteProduct(req.params.id);
-        if (!product) return res.status(404).json({ error: "Product not found" });
-        res.json({ message: "Product deleted", product });
+        const { id } = req.params;
+        await productService.deleteProduct(id);
+        res.json({ message: "Product deleted" });
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
+    }
+}
+
+// Featured products
+async function fetchFeaturedProducts(req, res) {
+    try {
+        const products = await productService.getFeaturedProducts();
+        res.json(products);
+    } catch (err) {
+        console.error("Error fetching featured products:", err.message);
+        res.status(500).json({ error: "Failed to fetch featured products" });
     }
 }
 
 module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    remove,
+    getAllProducts,
+    getProductById,
+    createProduct,
+    fetchFeaturedProducts,
+    updateProduct,
+    deleteProduct,
 };

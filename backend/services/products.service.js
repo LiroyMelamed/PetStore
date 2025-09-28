@@ -1,57 +1,42 @@
-const pool = require("../config/db");
+const db = require("../config/db");
 
-// ✅ שליפת כל המוצרים
 async function getAllProducts() {
-    const { rows } = await pool.query("SELECT * FROM products WHERE is_active = true ORDER BY id DESC");
-    return rows;
+    return db.any("SELECT * FROM products WHERE is_active = true ORDER BY created_at DESC");
 }
 
-// ✅ שליפת מוצר לפי ID
 async function getProductById(id) {
-    const { rows } = await pool.query("SELECT * FROM products WHERE id = $1 AND is_active = true", [id]);
-    return rows[0];
+    return db.oneOrNone("SELECT * FROM products WHERE id = $1", [id]);
 }
 
-// ✅ יצירת מוצר חדש
-async function createProduct({ name, description, price, category_id, stock }) {
-    const query = `
-    INSERT INTO products (name, description, price, category_id, stock, created_at, updated_at, is_active)
-    VALUES ($1, $2, $3, $4, $5, NOW(), NOW(), true)
-    RETURNING *;
-  `;
-    const values = [name, description, price, category_id, stock];
-    const { rows } = await pool.query(query, values);
-    return rows[0];
+async function createProduct({ name, description, price, stock, category_id, image_url }) {
+    return db.one(
+        `INSERT INTO products (name, description, price, stock, category_id, image_url)
+         VALUES ($1, $2, $3, $4, $5, $6)
+         RETURNING *`,
+        [name, description, price, stock, category_id, image_url]
+    );
 }
 
-// ✅ עדכון מוצר
-async function updateProduct(id, { name, description, price, category_id, stock }) {
-    const query = `
-    UPDATE products
-    SET name = $1,
-        description = $2,
-        price = $3,
-        category_id = $4,
-        stock = $5,
-        updated_at = NOW()
-    WHERE id = $6
-    RETURNING *;
-  `;
-    const values = [name, description, price, category_id, stock, id];
-    const { rows } = await pool.query(query, values);
-    return rows[0];
+async function updateProduct(id, { name, description, price, stock, category_id, image_url }) {
+    return db.one(
+        `UPDATE products 
+         SET name=$1, description=$2, price=$3, stock=$4, category_id=$5, image_url=$6, updated_at=NOW()
+         WHERE id=$7 RETURNING *`,
+        [name, description, price, stock, category_id, image_url, id]
+    );
 }
 
-// ✅ מחיקת מוצר (soft delete)
 async function deleteProduct(id) {
-    const query = `
-    UPDATE products
-    SET is_active = false, updated_at = NOW()
-    WHERE id = $1
-    RETURNING *;
-  `;
-    const { rows } = await pool.query(query, [id]);
-    return rows[0];
+    return db.none("DELETE FROM products WHERE id=$1", [id]);
+}
+
+async function getFeaturedProducts() {
+    return db.any(
+        `SELECT id, name, description, price, stock, image_url
+     FROM products
+     WHERE is_featured = true
+     ORDER BY id DESC`
+    );
 }
 
 module.exports = {
@@ -60,4 +45,5 @@ module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
+    getFeaturedProducts,
 };

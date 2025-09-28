@@ -17,7 +17,8 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 // The 'api' module is assumed to be configured for network requests.
-import { fetchAdmins, addAdmin, deleteAdmin } from '../api';
+
+import { fetchAdmins, addAdmin, deleteAdmin } from "../api";
 
 function ManageAdmins() {
     const { t } = useTranslation();

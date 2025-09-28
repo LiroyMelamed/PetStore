@@ -1,64 +1,64 @@
 const categoryService = require("../services/categories.service");
 
-// GET /api/categories
-async function getAll(req, res, next) {
+// Get all
+async function getAll(req, res) {
     try {
-        const categories = await categoryService.getAllCategories();
+        const categories = await categoryService.getAll();
         res.json(categories);
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
-// GET /api/categories/:id
-async function getById(req, res, next) {
+// Get by ID
+async function getById(req, res) {
     try {
-        const category = await categoryService.getCategoryById(req.params.id);
+        const category = await categoryService.getById(req.params.id);
         if (!category) return res.status(404).json({ error: "Category not found" });
         res.json(category);
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
-// POST /api/categories
-async function create(req, res, next) {
+// Create
+async function create(req, res) {
     try {
-        const { name } = req.body;
-        const category = await categoryService.createCategory({ name });
+        const category = await categoryService.create(req.body);
         res.status(201).json(category);
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
-// PUT /api/categories/:id
-async function update(req, res, next) {
+// Update
+async function update(req, res) {
     try {
-        const { name } = req.body;
-        const category = await categoryService.updateCategory(req.params.id, { name });
-        if (!category) return res.status(404).json({ error: "Category not found" });
+        const category = await categoryService.update(req.params.id, req.body);
         res.json(category);
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
-// DELETE /api/categories/:id
-async function remove(req, res, next) {
+// Delete
+async function remove(req, res) {
     try {
-        const category = await categoryService.deleteCategory(req.params.id);
-        if (!category) return res.status(404).json({ error: "Category not found" });
-        res.json({ message: "Category deleted", category });
+        await categoryService.remove(req.params.id);
+        res.json({ message: "Category deleted" });
     } catch (err) {
-        next(err);
+        res.status(400).json({ error: err.message });
     }
 }
 
-module.exports = {
-    getAll,
-    getById,
-    create,
-    update,
-    remove,
-};
+async function getProductsByCategory(req, res) {
+    try {
+        const { id } = req.params;
+        const products = await categoryService.getProductsByCategory(id);
+        res.json(products);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+}
+
+module.exports = { getAll, getById, create, update, remove, getProductsByCategory };

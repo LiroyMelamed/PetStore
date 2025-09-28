@@ -1,56 +1,53 @@
-const pool = require("../config/db");
+const db = require("../config/db");
 
-// שליפת כל הקטגוריות
-async function getAllCategories() {
-    const { rows } = await pool.query("SELECT * FROM categories WHERE is_active = true ORDER BY id DESC");
-    return rows;
+// ===== Get All Categories =====
+async function getAll() {
+  return db.any(`SELECT * FROM categories WHERE is_active = true ORDER BY created_at DESC`);
 }
 
-// שליפת קטגוריה לפי ID
-async function getCategoryById(id) {
-    const { rows } = await pool.query("SELECT * FROM categories WHERE id = $1 AND is_active = true", [id]);
-    return rows[0];
+// ===== Get Category By ID =====
+async function getById(id) {
+  return db.oneOrNone(`SELECT * FROM categories WHERE id = $1`, [id]);
 }
 
-// יצירת קטגוריה חדשה
-async function createCategory({ name }) {
-    const query = `
-    INSERT INTO categories (name, created_at, updated_at, is_active)
-    VALUES ($1, NOW(), NOW(), true)
-    RETURNING *;
-  `;
-    const { rows } = await pool.query(query, [name]);
-    return rows[0];
+// ===== Create Category =====
+async function create({ name, seo_title, seo_description }) {
+  return db.one(
+    `INSERT INTO categories (name, seo_title, seo_description)
+         VALUES ($1, $2, $3)
+         RETURNING *`,
+    [name, seo_title, seo_description]
+  );
 }
 
-// עדכון קטגוריה
-async function updateCategory(id, { name }) {
-    const query = `
-    UPDATE categories
-    SET name = $1, updated_at = NOW()
-    WHERE id = $2
-    RETURNING *;
-  `;
-    const { rows } = await pool.query(query, [name, id]);
-    return rows[0];
+// ===== Update Category =====
+async function update(id, { name, seo_title, seo_description }) {
+  return db.one(
+    `UPDATE categories
+         SET name = $2, seo_title = $3, seo_description = $4, updated_at = now()
+         WHERE id = $1
+         RETURNING *`,
+    [id, name, seo_title, seo_description]
+  );
 }
 
-// מחיקה רכה (soft delete)
-async function deleteCategory(id) {
-    const query = `
-    UPDATE categories
-    SET is_active = false, updated_at = NOW()
-    WHERE id = $1
-    RETURNING *;
-  `;
-    const { rows } = await pool.query(query, [id]);
-    return rows[0];
+// ===== Delete Category =====
+async function remove(id) {
+  return db.none(`DELETE FROM categories WHERE id = $1`, [id]);
+}
+
+async function getProductsByCategory(categoryId) {
+  return db.any(
+    `SELECT * FROM products WHERE category_id = $1 AND is_active = true ORDER BY created_at DESC`,
+    [categoryId]
+  );
 }
 
 module.exports = {
-    getAllCategories,
-    getCategoryById,
-    createCategory,
-    updateCategory,
-    deleteCategory,
+  getAll,
+  getById,
+  create,
+  update,
+  remove,
+  getProductsByCategory,
 };

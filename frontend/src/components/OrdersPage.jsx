@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
-import { useTranslation } from '../i18n';
+import { useTranslation } from "react-i18next"; // במקום מה־i18n.js
 
 // רכיב עבור עמוד ניהול הזמנות
 const OrdersPage = () => {

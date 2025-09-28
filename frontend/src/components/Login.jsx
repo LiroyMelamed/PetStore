@@ -1,78 +1,31 @@
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Container, Box, Typography, TextField, Button, Alert } from '@mui/material';
-import axios from 'axios';
-import { useAuth } from '../context/AuthContext';
+// src/components/Login.jsx
+import React, { useState } from "react";
+import { Box, TextField, Button, Card, CardContent, Typography } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
 
-function Login() {
-    const { t } = useTranslation();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+export default function Login() {
     const { login } = useAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const handleLogin = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        try {
-            setError('');
-            const response = await axios.post('http://localhost:3000/api/login', { username, password });
-
-            // שמירת הטוקן וניווט דרך הקונטקסט
-            login(response.data.token);
-        } catch (err) {
-            console.error(err);
-            if (err.response && err.response.data && err.response.data.error) {
-                setError(err.response.data.error);
-            } else {
-                setError('An unexpected error occurred. Please try again.');
-            }
-        }
+        // קריאה ל-API כאן
+        login("FAKE_TOKEN");
     };
 
     return (
-        <Container maxWidth="xs">
-            <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Typography component="h1" variant="h5">
-                    {t('login.title')}
-                </Typography>
-                <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
-                    {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="username"
-                        label={t('login.username_label')}
-                        name="username"
-                        autoComplete="username"
-                        autoFocus
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label={t('login.password_label')}
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                    >
-                        {t('login.submit_button')}
-                    </Button>
-                </Box>
-            </Box>
-        </Container>
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
+            <Card sx={{ width: 400, p: 2 }}>
+                <CardContent>
+                    <Typography variant="h5" gutterBottom>התחברות</Typography>
+                    <form onSubmit={handleSubmit}>
+                        <TextField label="אימייל" fullWidth margin="normal" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <TextField label="סיסמה" type="password" fullWidth margin="normal" value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }}>התחבר</Button>
+                    </form>
+                </CardContent>
+            </Card>
+        </Box>
     );
 }
-
-export default Login;

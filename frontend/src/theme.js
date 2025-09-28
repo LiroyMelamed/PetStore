@@ -1,27 +1,28 @@
-import { createTheme } from '@mui/material/styles';
+// src/theme.js
+import { createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#4caf50', // A shade of green, for a fresh look
+            main: "#1976d2", // כחול מודרני
         },
         secondary: {
-            main: '#ff9800', // A shade of orange for accents
+            main: "#f50057", // ורוד/אדום מודרני
         },
         background: {
-            default: '#f4f6f8', // A light grey background
+            default: "#f9f9f9", // רקע אפור בהיר
+            paper: "#ffffff",
+        },
+        text: {
+            primary: "#212121",
+            secondary: "#757575",
         },
     },
     typography: {
-        fontFamily: [
-            'Rubik',
-            'sans-serif',
-        ].join(','),
-        h1: {
-            fontSize: '2.5rem',
-            fontWeight: 500,
-        },
-        // ... you can add more typography styles here
+        fontFamily: "Rubik, Arial, sans-serif",
+        h1: { fontWeight: 700 },
+        h2: { fontWeight: 600 },
+        button: { textTransform: "none" },
     },
 });
 

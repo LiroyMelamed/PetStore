@@ -26,4 +26,9 @@ i18n
         },
     });
 
+if (typeof document !== 'undefined') {
+    document.documentElement.dir = i18n.language === 'he' ? 'rtl' : 'ltr';
+}
+
+
 export default i18n;

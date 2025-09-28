@@ -1,6 +1,8 @@
 const categoryRoutes = require("./routes/categories.routes");
 const errorHandler = require("./middlewares/errorHandler");
 const productRoutes = require("./routes/products.routes");
+const bannerRoutes = require("./routes/banners.routes");
+const adminsRoutes = require("./routes/admin.routes");
 const orderRoutes = require("./routes/orders.routes");
 const rateLimit = require("./middlewares/rateLimit");
 const authRoutes = require("./routes/auth.routes");
@@ -26,6 +28,8 @@ app.use(morgan("dev"));
 // ===== Routes =====
 app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/admins", adminsRoutes);
+app.use("/api/banners", bannerRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/categories", categoryRoutes);
 

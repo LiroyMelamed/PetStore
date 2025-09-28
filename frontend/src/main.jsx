@@ -8,6 +8,9 @@ import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
 import { prefixer } from 'stylis';
 import rtlPlugin from 'stylis-plugin-rtl';
+import { BrowserRouter } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext.jsx';
+import { CartProvider } from './context/CartContext.jsx';
 
 // פונקציה ליצירת cache עם תמיכה ב-RTL, תלוי בשפה
 const createEmotionCache = (isRtl) => {
@@ -30,8 +33,14 @@ root.render(
   <React.StrictMode>
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={theme}>
-        <App />
+        <BrowserRouter>
+          <AuthProvider>
+            <CartProvider>
+              <App />
+            </CartProvider>
+          </AuthProvider>
+        </BrowserRouter>
       </ThemeProvider>
     </CacheProvider>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

@@ -1,53 +1,14 @@
 const express = require("express");
-const { createOrder } = require("../controllers/orders.controller");
+const router = express.Router();
+const ordersController = require("../controllers/orders.controller");
 const auth = require("../middlewares/auth");
 
-/**
- * @swagger
- * /api/orders/checkout:
- *   post:
- *     summary: Create a new order (checkout)
- *     tags: [Orders]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               customer_id:
- *                 type: integer
- *               shipping_address_id:
- *                 type: integer
- *               billing_address_id:
- *                 type: integer
- *               items:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     product_id:
- *                       type: integer
- *                     variant_id:
- *                       type: integer
- *                       nullable: true
- *                     qty:
- *                       type: integer
- *                     unit_price:
- *                       type: number
- *               discount_code:
- *                 type: string
- *     responses:
- *       200:
- *         description: Order created successfully
- *       400:
- *         description: Invalid input
- */
+// צריך טוקן כדי לבצע פעולות
+router.post("/checkout", auth(), ordersController.checkout);
+router.get("/my", auth(), ordersController.getMyOrders);
+router.get("/:id", auth(), ordersController.getOrderById);
 
-
-const router = express.Router();
-
-// ✅ Checkout API
-router.post("/checkout", auth(), createOrder);
+// רק אדמין משנה סטטוס
+router.patch("/:id/status", auth("admin"), ordersController.updateStatus);
 
 module.exports = router;

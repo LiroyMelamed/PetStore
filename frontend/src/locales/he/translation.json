@@ -1,87 +1,57 @@
 {
     "common": {
-        "admin_panel_title": "Pet Store Admin Panel",
-        "edit_button": "Edit",
-        "delete_button": "Delete",
-        "cancel_button": "Cancel",
-        "save_changes_button": "Save Changes",
-        "add_button": "Add",
-        "delete_confirmation_title": "Confirm Deletion",
-        "delete_confirmation_message": "Are you sure you want to permanently delete this {{item}}?",
-        "confirm_button": "Confirm",
-        "product": "product",
-        "category": "category"
+        "admin_panel_title": "מערכת ניהול חנות חיות",
+        "edit_button": "ערוך",
+        "delete_button": "מחק"
     },
     "login": {
-        "title": "Login",
-        "username_label": "Username",
-        "password_label": "Password",
-        "submit_button": "Login"
+        "title": "התחברות",
+        "username_label": "שם משתמש",
+        "password_label": "סיסמה",
+        "submit_button": "התחבר"
     },
     "register": {
-        "title": "Register",
-        "username_label": "Username",
-        "password_label": "Password",
-        "submit_button": "Register"
+        "title": "הרשמה",
+        "username_label": "שם משתמש",
+        "password_label": "סיסמה",
+        "submit_button": "הרשם"
     },
-    "logout_button": "Logout",
+    "logout_button": "התנתקות",
     "dashboard": {
-        "title": "Admin Dashboard",
-        "welcome_message": "Welcome to the admin system! Here you can manage products, categories, and orders.",
+        "title": "לוח ניהול",
+        "welcome_message": "ברוך הבא למערכת הניהול! כאן תוכל לנהל מוצרים, קטגוריות והזמנות.",
         "menu": {
-            "products": "Manage Products",
-            "categories": "Manage Categories",
-            "orders": "Manage Orders",
-            "manage_admins": "Manage Admins"
+            "products": "ניהול מוצרים",
+            "categories": "ניהול קטגוריות",
+            "orders": "ניהול הזמנות",
+            "manage_admins": "ניהול אדמינים"
         }
     },
     "product_manager": {
-        "title": "Product Management",
-        "welcome_message": "Here you can add, update, and delete products.",
-        "add_button": "Add Product",
+        "title": "ניהול מוצרים",
+        "welcome_message": "כאן תוכל להוסיף, לעדכן ולמחוק מוצרים.",
+        "add_button": "הוסף מוצר",
         "table": {
-            "name": "Product Name",
-            "price": "Price",
-            "stock": "Stock",
-            "actions": "Actions"
+            "name": "שם מוצר",
+            "price": "מחיר",
+            "stock": "מלאי",
+            "actions": "פעולות"
         },
-        "error": "An error occurred while loading products."
-    },
-    "product_form": {
-        "add_title": "Add New Product",
-        "edit_title": "Edit Product",
-        "success_create": "Product created successfully!",
-        "success_update": "Product updated successfully!",
-        "fields": {
-            "name": "Product Name",
-            "description": "Description",
-            "price": "Price",
-            "stock": "Stock",
-            "imageUrl": "Image URL",
-            "category": "Category",
-            "seoTitle": "SEO Title",
-            "seoDescription": "SEO Description"
-        }
+        "error": "אירעה שגיאה בטעינת המוצרים."
     },
     "category_manager": {
-        "title": "Category Management",
-        "welcome_message": "Here you can add, update, and delete categories.",
-        "add_button": "Add Category",
-        "table": {
-            "name": "Category Name",
-            "actions": "Actions"
-        },
-        "error": "An error occurred while loading categories."
+        "title": "ניהול קטגוריות",
+        "welcome_message": "כאן תוכל להוסיף, לעדכן ולמחוק קטגוריות."
     },
-    "category_form": {
-        "add_title": "Add New Category",
-        "edit_title": "Edit Category",
-        "success_create": "Category created successfully!",
-        "success_update": "Category updated successfully!",
-        "fields": {
-            "name": "Category Name",
-            "seoTitle": "SEO Title",
-            "seoDescription": "SEO Description"
-        }
+    "shop": {
+        "home": "בית",
+        "catalog": "קטלוג",
+        "cart": "סל",
+        "myOrders": "ההזמנות שלי",
+        "checkout": "תשלום",
+        "email": "אימייל",
+        "password": "סיסמה",
+        "submit": "שלח",
+        "welcome": "ברוך הבא לחנות שלנו!"
     }
 }

@@ -1,15 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const categoriesController = require("../controllers/categories.controller");
+const controller = require("../controllers/categories.controller");
 const auth = require("../middlewares/auth");
 
-// פומבי
-router.get("/", categoriesController.getAll);
-router.get("/:id", categoriesController.getById);
+// Public
+router.get("/", controller.getAll);
+router.get("/:id", controller.getById);
+router.get("/:id/products", controller.getProductsByCategory);
 
-// אדמין בלבד
-router.post("/", auth("admin"), categoriesController.create);
-router.put("/:id", auth("admin"), categoriesController.update);
-router.delete("/:id", auth("admin"), categoriesController.remove);
+// Admin
+router.post("/", auth("admin"), controller.create);
+router.put("/:id", auth("admin"), controller.update);
+router.delete("/:id", auth("admin"), controller.remove);
 
 module.exports = router;

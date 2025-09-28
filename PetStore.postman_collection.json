@@ -2,15 +2,41 @@
     "info": {
         "name": "PetStore API",
         "_postman_id": "d4d43f4a-5b2f-4b8f-bc0e-123456789abc",
-        "description": "Collection for PetStore API (Orders, Products, Categories, Auth, Admin)",
+        "description": "Collection for PetStore API (Orders, Products, Categories, Auth, Admin) with updated schema",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:3000"
+        },
+        {
+            "key": "token",
+            "value": ""
+        },
+        {
+            "key": "email",
+            "value": "test@example.com"
+        },
+        {
+            "key": "password",
+            "value": "123456"
+        },
+        {
+            "key": "phone",
+            "value": "+972500000000"
+        },
+        {
+            "key": "faceIdHash",
+            "value": "sample-faceid-hash"
+        }
+    ],
     "item": [
         {
             "name": "Auth",
             "item": [
                 {
-                    "name": "Register",
+                    "name": "Register (email+password)",
                     "request": {
                         "method": "POST",
                         "header": [
@@ -22,12 +48,29 @@
                         "url": "{{baseUrl}}/api/auth/register",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"test@example.com\",\n  \"password\": \"123456\"\n}"
+                            "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"{{email}}\",\n  \"phone\": \"{{phone}}\",\n  \"password\": \"{{password}}\"\n}"
                         }
                     }
                 },
                 {
-                    "name": "Login",
+                    "name": "Login — Email & Password",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "let json;",
+                                    "try { json = pm.response.json(); } catch(e) { json = {}; }",
+                                    "if (json.token) {",
+                                    "  pm.collectionVariables.set('token', json.token);",
+                                    "  console.log('✅ Token saved');",
+                                    "} else {",
+                                    "  console.warn('⚠️ No token in response');",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
                     "request": {
                         "method": "POST",
                         "header": [
@@ -39,7 +82,92 @@
                         "url": "{{baseUrl}}/api/auth/login",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"123456\"\n}"
+                            "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Phone OTP — Request",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/auth/login-phone/request",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"phone\": \"{{phone}}\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Phone OTP — Verify",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "let json;",
+                                    "try { json = pm.response.json(); } catch(e) { json = {}; }",
+                                    "if (json.token) {",
+                                    "  pm.collectionVariables.set('token', json.token);",
+                                    "  console.log('✅ Token saved');",
+                                    "} else {",
+                                    "  console.warn('⚠️ No token in response');",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/auth/login-phone/verify",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"phone\": \"{{phone}}\",\n  \"code\": \"000000\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Login — FaceID",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "let json;",
+                                    "try { json = pm.response.json(); } catch(e) { json = {}; }",
+                                    "if (json.token) {",
+                                    "  pm.collectionVariables.set('token', json.token);",
+                                    "  console.log('✅ Token saved');",
+                                    "} else {",
+                                    "  console.warn('⚠️ No token in response');",
+                                    "}"
+                                ]
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/auth/login-faceid",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"faceIdHash\": \"{{faceIdHash}}\"\n}"
                         }
                     }
                 }
@@ -213,7 +341,54 @@
                         "url": "{{baseUrl}}/api/orders/checkout",
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"customer_id\": 1,\n  \"shipping_address_id\": 10,\n  \"billing_address_id\": 11,\n  \"items\": [\n    { \"product_id\": 1, \"variant_id\": null, \"qty\": 2, \"unit_price\": 49.90 }\n  ],\n  \"discount_code\": \"DOG10\"\n}"
+                            "raw": "{\n  \"shipping_address_id\": 1,\n  \"billing_address_id\": 2,\n  \"items\": [\n    { \"product_id\": 1, \"qty\": 2, \"unit_price\": 49.90 }\n  ],\n  \"discount_code\": \"DOG10\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Get My Orders",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/orders/my"
+                    }
+                },
+                {
+                    "name": "Get Order by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/orders/1"
+                    }
+                },
+                {
+                    "name": "Update Order Status (Admin only)",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{adminToken}}"
+                            }
+                        ],
+                        "url": "{{baseUrl}}/api/orders/1/status",
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"status\": \"shipped\"\n}"
                         }
                     }
                 }
@@ -236,16 +411,6 @@
                     }
                 }
             ]
-        }
-    ],
-    "variable": [
-        {
-            "key": "baseUrl",
-            "value": "http://localhost:3000"
-        },
-        {
-            "key": "token",
-            "value": ""
         }
     ]
 }

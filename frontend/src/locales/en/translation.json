@@ -42,5 +42,16 @@
     "category_manager": {
         "title": "Category Management",
         "welcome_message": "Here you can add, update, and delete categories."
+    },
+    "shop": {
+        "home": "Home",
+        "catalog": "Catalog",
+        "cart": "Cart",
+        "myOrders": "My Orders",
+        "checkout": "Checkout",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Submit",
+        "welcome": "Welcome to our shop!"
     }
 }

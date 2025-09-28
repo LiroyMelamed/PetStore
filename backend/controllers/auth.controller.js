@@ -15,8 +15,8 @@ async function register(req, res) {
 async function loginEmail(req, res) {
     try {
         const { email, password } = req.body;
-        const token = await authService.loginEmail({ email, password });
-        res.json({ token });
+        const result = await authService.loginEmail({ email, password });
+        res.json(result);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
@@ -37,8 +37,8 @@ async function requestOtp(req, res) {
 async function verifyOtp(req, res) {
     try {
         const { phone, code } = req.body;
-        const token = await authService.verifyOtp(phone, code);
-        res.json({ token });
+        const result = await authService.verifyOtp(phone, code);
+        res.json(result);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
@@ -48,8 +48,8 @@ async function verifyOtp(req, res) {
 async function loginFaceId(req, res) {
     try {
         const { faceIdHash } = req.body;
-        const token = await authService.loginFaceId(faceIdHash);
-        res.json({ token });
+        const result = await authService.loginFaceId(faceIdHash);
+        res.json(result);
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
