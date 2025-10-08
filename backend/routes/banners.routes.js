@@ -7,7 +7,9 @@ const auth = require("../middlewares/auth");
 router.get("/", bannerController.fetchBanners);
 
 // Admin
-router.post("/", auth("admin"), bannerController.addBanner);
-router.delete("/:id", auth("admin"), bannerController.removeBanner);
+router.get("/all", auth(["admin", "manager"]), bannerController.fetchAllBanners);
+router.post("/", auth(["admin", "manager"]), bannerController.addBanner);
+router.put("/:id", auth(["admin", "manager"]), bannerController.updateBanner);
+router.delete("/:id", auth(["admin", "manager"]), bannerController.removeBanner);
 
 module.exports = router;

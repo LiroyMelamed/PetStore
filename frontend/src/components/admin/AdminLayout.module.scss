@@ -1,0 +1,45 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+}
+
+.sidebar {
+    @include card();
+    padding: 18px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+.brand {
+    margin: 0;
+    font-size: 18px;
+}
+
+.sub {
+    color: $muted;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+.nav {
+    display: grid;
+    gap: 10px;
+    margin-top: 16px;
+
+    a {
+        color: $text;
+        opacity: .9;
+
+        &:hover {
+            color: $brand;
+        }
+    }
+}
+
+.main {
+    padding: 18px;
+}

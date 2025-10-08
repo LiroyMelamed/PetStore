@@ -1,93 +1,90 @@
 import React, { useEffect, useState } from "react";
 import { fetchBanners, fetchFeaturedProducts, fetchProducts } from "../api";
 import "../styles/HomePage.scss";
+import ProductsGrid from "../components/ProductsGrid";
+import Slider from "react-slick";
+import { useTranslation } from "react-i18next";
 
 const HomePage = () => {
+    const { t } = useTranslation();
     const [banners, setBanners] = useState([]);
     const [featured, setFeatured] = useState([]);
     const [newProducts, setNewProducts] = useState([]);
 
     useEffect(() => {
-        const loadData = async () => {
+        let ignore = false;
+        (async () => {
             try {
-                const bannersData = await fetchBanners();
-                const featuredData = await fetchFeaturedProducts();
-                const allProducts = await fetchProducts();
-
-                setBanners(bannersData || []);
-                setFeatured(featuredData || []);
-                setNewProducts(allProducts?.slice(0, 8) || []);
-            } catch (err) {
-                console.error("Error loading homepage data:", err);
+                const [bannersData, featuredData, allProducts] = await Promise.all([
+                    fetchBanners(),
+                    fetchFeaturedProducts(),
+                    fetchProducts(),
+                ]);
+                if (ignore) return;
+                setBanners(Array.isArray(bannersData) ? bannersData : []);
+                setFeatured(Array.isArray(featuredData) ? featuredData : []);
+                setNewProducts((Array.isArray(allProducts) ? allProducts : []).slice(0, 12));
+            } catch (e) {
+                console.error(e);
             }
-        };
-        loadData();
+        })();
+        return () => { ignore = true; };
     }, []);
 
+    const goToProduct = (p) => (window.location.href = `/product/${p.id}`);
+
+    const sliderSettings = {
+        dots: true,
+        arrows: false,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: banners.length > 1,
+        autoplaySpeed: 4500,
+        pauseOnHover: true,
+    };
+
     return (
-        <div className="homepage">
-            {/* Hero Banner */}
-            <section className="hero">
-                {banners.length > 0 && (
-                    <div className="hero-banner">
-                        <img src={banners[0].image_url} alt={banners[0].title} />
-                        <div className="hero-content">
-                            <h1>{banners[0].title}</h1>
-                            <p>{banners[0].subtitle}</p>
-                            <button className="cta-btn">קנה עכשיו</button>
+        <div className="home">
+            {/* HERO */}
+            {banners?.length > 0 && (
+                <section className="hero">
+                    {banners.length > 1 ? (
+                        <Slider {...sliderSettings}>
+                            {banners.map((b) => (
+                                <a key={b.id} className="hero-slide" href={b.link_url || "#"}>
+                                    <img src={b.image_url} alt={b.title || "Banner"} />
+                                </a>
+                            ))}
+                        </Slider>
+                    ) : (
+                        <div className="hero-banner">
+                            <a href={banners[0].link_url || "#"}>
+                                <img src={banners[0].image_url} alt={banners[0].title || "Banner"} />
+                            </a>
                         </div>
-                    </div>
-                )}
-            </section>
+                    )}
+                </section>
+            )}
 
-            {/* USPs */}
-            <section className="usp">
-                <div className="usp-item">🚚 משלוח חינם מעל 199₪</div>
-                <div className="usp-item">⭐ מוצרים איכותיים בלבד</div>
-                <div className="usp-item">📞 שירות לקוחות 24/7</div>
-            </section>
+            {/* Featured */}
+            <ProductsGrid
+                title={t("home.featured_title", "Featured Products")}
+                products={featured}
+                onItemClick={goToProduct}
+            />
 
-            {/* Featured Products */}
-            <section className="products-section">
-                <h2>מוצרים מומלצים</h2>
-                <div className="products-grid">
-                    {featured.map((p) => (
-                        <div className="product-card" key={p.id}>
-                            <img src={p.image_url} alt={p.name} />
-                            <h3>{p.name}</h3>
-                            <p>{p.price} ₪</p>
-                            <button>הוסף לעגלה</button>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* Mid Banner */}
-            <section className="mid-banner">
-                <div className="mid-banner-content">
-                    <h2>30% הנחה בהזמנה ראשונה!</h2>
-                    <button className="cta-btn">לפרטים</button>
-                </div>
-            </section>
-
-            {/* New Products */}
-            <section className="products-section">
-                <h2>מוצרים חדשים</h2>
-                <div className="products-grid">
-                    {newProducts.map((p) => (
-                        <div className="product-card" key={p.id}>
-                            <img src={p.image_url} alt={p.name} />
-                            <h3>{p.name}</h3>
-                            <p>{p.price} ₪</p>
-                            <button>הוסף לעגלה</button>
-                        </div>
-                    ))}
-                </div>
-            </section>
+            {/* New Arrivals */}
+            <ProductsGrid
+                title={t("home.new_arrivals", "New Arrivals")}
+                products={newProducts}
+                onItemClick={goToProduct}
+            />
 
             {/* Brands */}
             <section className="brands">
-                <h2>מותגים נבחרים</h2>
+                <h2>{t("home.selected_brands", "Selected Brands")}</h2>
                 <div className="brands-logos">
                     <img src="https://catandog.co.il/wp-content/uploads/2022/11/2.png" alt="Royal Canin" />
                     <img src="https://www.purina.eu/sites/default/files/2024-06/purina-logo-new.png" alt="Purina" />

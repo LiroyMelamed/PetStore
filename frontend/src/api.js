@@ -1,7 +1,8 @@
 // src/api.js
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api";
+// ✅ נשארים עם אותה ארכיטקטורה, רק מוסיפים Fallback ל-ENV בלי לשנות את הקוד סביב
+const API_URL = (import.meta?.env?.VITE_API_BASE) || "http://localhost:3000/api";
 
 // --- Axios Instance ---
 const api = axios.create({
@@ -106,15 +107,18 @@ export const deleteProduct = async (id) => {
     }
 };
 
-export const fetchProductsByCategory = async (categoryId) => {
+// ✅ איחוד לשימוש ב-axios instance בלבד (בלי fetch/axios חיצוני)
+export const fetchCategoryProducts = async (categoryId) => {
     try {
-        const response = await axios.get(`${API_URL}/categories/${categoryId}/products`);
-        return response.data;
-    } catch (error) {
-        console.error(`Error fetching products for category ${categoryId}:`, error);
-        throw error;
+        const { data } = await api.get(`/categories/${categoryId}/products`);
+        return data;
+    } catch (e) {
+        handleError(e);
     }
 };
+
+// אליאס לשמירת תאימות אם יש קוד שקורא לשם הישן:
+export const fetchProductsByCategory = fetchCategoryProducts;
 
 // ===================== CATEGORIES =====================
 export const fetchCategories = async () => {
@@ -260,21 +264,123 @@ export const deleteAdmin = async (id) => {
 export const fetchBanners = async () => {
     try {
         const { data } = await api.get("/banners");
-        console.log("Fetched banners:", data);
-
         return data;
     } catch (e) {
         handleError(e);
     }
 };
 
+// ===================== BANNERS (admin helpers) =====================
+export const createBanner = async (payload) => {
+    try { const { data } = await api.post("/banners", payload); return data; }
+    catch (e) { handleError(e); }
+};
+
+export const updateBanner = async (id, payload) => {
+    try { const { data } = await api.put(`/banners/${id}`, payload); return data; }
+    catch (e) { handleError(e); }
+};
+
+export const deleteBannerApi = async (id) => {
+    try { const { data } = await api.delete(`/banners/${id}`); return data; }
+    catch (e) { handleError(e); }
+};
+
+export const fetchAllBanners = async () => {
+    try { const { data } = await api.get("/banners/all"); return data; }
+    catch (e) { handleError(e); }
+};
+
 // ===================== FEATURED PRODUCTS =====================
 export const fetchFeaturedProducts = async () => {
     try {
         const { data } = await api.get("/products/featured");
-        console.log("Fetched featured products:", data);
         return data;
     } catch (e) {
         handleError(e);
     }
+};
+
+// ===================== STAFF ORDERS LIST =====================
+export const fetchOrders = async (params = {}) => {
+    try {
+        const q = new URLSearchParams(params).toString();
+        const { data } = await api.get(`/orders${q ? `?${q}` : ""}`);
+        return data;
+    } catch (e) {
+        handleError(e);
+    }
+};
+
+// ===================== ROLE MANAGEMENT =====================
+export const setUserRole = async (userId, role) => {
+    try {
+        const { data } = await api.patch(`/admins/users/${userId}/role`, { role });
+        return data;
+    } catch (e) {
+        handleError(e);
+    }
+};
+
+// ===================== METRICS =====================
+export const fetchAdminOverview = async (params = {}) => {
+    try {
+        const q = new URLSearchParams(params).toString();
+        const { data } = await api.get(`/admins/metrics/overview${q ? `?${q}` : ""}`);
+        return data;
+    } catch (e) {
+        handleError(e);
+    }
+};
+
+export const fetchMetricsSeries = async (params = {}) => {
+    try {
+        const q = new URLSearchParams(params).toString();
+        const { data } = await api.get(`/admins/metrics/series${q ? `?${q}` : ""}`);
+        return data;
+    } catch (e) {
+        handleError(e);
+    }
+};
+
+export const fetchMetricsStatus = async (params = {}) => {
+    try {
+        const q = new URLSearchParams(params).toString();
+        const { data } = await api.get(`/admins/metrics/status${q ? `?${q}` : ""}`);
+        return data;
+    } catch (e) {
+        handleError(e);
+    }
+};
+
+export const fetchTopProducts = async (params = {}) => {
+    try { const { data } = await api.get(`/admins/metrics/top-products`, { params }); return data; }
+    catch (e) { handleError(e); }
+};
+
+// ===================== INVENTORY =====================
+export const adjustInventory = async (payload) => {
+    try {
+        const { data } = await api.post(`/inventory/adjust`, payload);
+        return data;
+    } catch (e) {
+        handleError(e);
+    }
+};
+
+
+
+export const fetchOrdersOverTime = async (params = {}) => {
+    try { const { data } = await api.get(`/admins/metrics/orders-over-time`, { params }); return data; }
+    catch (e) { handleError(e); }
+};
+
+export const fetchRevenueOverTime = async (params = {}) => {
+    try { const { data } = await api.get(`/admins/metrics/revenue-over-time`, { params }); return data; }
+    catch (e) { handleError(e); }
+};
+
+export const fetchOrdersByStatus = async (params = {}) => {
+    try { const { data } = await api.get(`/admins/metrics/orders-by-status`, { params }); return data; }
+    catch (e) { handleError(e); }
 };

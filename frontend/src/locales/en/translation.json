@@ -2,7 +2,15 @@
     "common": {
         "admin_panel_title": "Pet Store Admin Panel",
         "edit_button": "Edit",
-        "delete_button": "Delete"
+        "delete_button": "Delete",
+        "create_button": "Create",
+        "save_button": "Save",
+        "cancel_button": "Cancel",
+        "update_button": "Update",
+        "filter_button": "Filter",
+        "all_option": "All",
+        "yes": "Yes",
+        "no": "No"
     },
     "login": {
         "title": "Login",
@@ -53,5 +61,93 @@
         "password": "Password",
         "submit": "Submit",
         "welcome": "Welcome to our shop!"
+    },
+    "admin": {
+        "nav": {
+            "banners": "Banners",
+            "orders": "Orders",
+            "users": "Users",
+            "products": "Products",
+            "categories": "Categories",
+            "dashboard": "Dashboard"
+        },
+        "banners": {
+            "fields": {
+                "title": "Title",
+                "linkUrl": "Link URL",
+                "imageUrl": "Image URL",
+                "position": "Position",
+                "active": "Active"
+            },
+            "activate": "Activate",
+            "deactivate": "Deactivate",
+            "confirmDelete": "Delete banner?"
+        }
+    },
+    "status": {
+        "active": "active",
+        "inactive": "inactive"
+    },
+    "orders": {
+        "search_placeholder": "Search id/email",
+        "columns": {
+            "id": "ID",
+            "status": "Status",
+            "subtotal": "Subtotal",
+            "discount": "Discount",
+            "total": "Total",
+            "created": "Created"
+        },
+        "statuses": {
+            "pending": "pending",
+            "paid": "paid",
+            "shipped": "shipped",
+            "delivered": "delivered",
+            "failed": "failed",
+            "canceled": "canceled"
+        }
+    },
+    "users": {
+        "columns": {
+            "id": "ID",
+            "email": "Email",
+            "role": "Role",
+            "actions": "Actions"
+        },
+        "roles": {
+            "user": "User",
+            "manager": "Manager",
+            "admin": "Admin"
+        }
+    },
+    "home": {
+        "featured_title": "Featured Products",
+        "new_arrivals": "New Arrivals",
+        "selected_brands": "Selected Brands",
+        "browse_catalog": "Browse Catalog",
+        "welcome_title": "Welcome to PetShop",
+        "welcome_sub": "Great deals for your best friends"
+    },
+    "analytics": {
+        "title": "Analytics",
+        "from": "From",
+        "to_exclusive": "To (exclusive)",
+        "granularity": "Granularity",
+        "granularity_day": "Day",
+        "granularity_week": "Week",
+        "granularity_month": "Month",
+        "kpi_orders": "Orders",
+        "kpi_revenue_ils": "Revenue (ILS)",
+        "kpi_avg_order_value": "Avg Order Value",
+        "kpi_active_customers": "Active Customers",
+        "kpi_active_products": "Active Products",
+        "chart_revenue_over_time": "Revenue over time",
+        "chart_orders_by_status": "Orders by status",
+        "chart_orders_over_time": "Orders over time",
+        "table_top_products": "Top products",
+        "col_product": "Product",
+        "col_qty": "Qty",
+        "col_revenue": "Revenue",
+        "period": "Period"
     }
 }

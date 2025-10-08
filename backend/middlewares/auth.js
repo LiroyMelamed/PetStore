@@ -16,7 +16,10 @@ function auth(requiredRole = null) {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             req.user = decoded; // { id, role, iat, exp }
 
-            if (requiredRole && req.user.role !== requiredRole) {
+            const allowed = Array.isArray(requiredRole)
+                ? requiredRole
+                : (requiredRole ? [requiredRole] : null);
+            if (allowed && !allowed.includes(req.user.role)) {
                 return res.status(403).json({ error: "Forbidden: insufficient role" });
             }
 

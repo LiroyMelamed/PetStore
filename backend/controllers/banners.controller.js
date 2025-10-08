@@ -1,5 +1,14 @@
 const bannerService = require("../services/banners.service");
 
+async function fetchAllBanners(req, res) {
+    try {
+        const banners = await bannerService.getAllBanners();
+        res.json(banners);
+    } catch (err) {
+        res.status(500).json({ error: "Failed to fetch banners" });
+    }
+}
+
 async function fetchBanners(req, res) {
     try {
         const banners = await bannerService.getActiveBanners();
@@ -28,8 +37,19 @@ async function removeBanner(req, res) {
     }
 }
 
+async function updateBanner(req, res) {
+    try {
+        const banner = await bannerService.updateBanner(req.params.id, req.body);
+        res.json(banner);
+    } catch (err) {
+        res.status(400).json({ error: err.message });
+    }
+}
+
 module.exports = {
+    fetchAllBanners,
     fetchBanners,
     addBanner,
     removeBanner,
+    updateBanner,
 };

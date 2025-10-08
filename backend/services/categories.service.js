@@ -33,7 +33,10 @@ async function update(id, { name, seo_title, seo_description }) {
 
 // ===== Delete Category =====
 async function remove(id) {
-  return db.none(`DELETE FROM categories WHERE id = $1`, [id]);
+  return db.none(
+    `UPDATE categories SET is_active = false, updated_at = now() WHERE id = $1`,
+    [id]
+  );
 }
 
 async function getProductsByCategory(categoryId) {

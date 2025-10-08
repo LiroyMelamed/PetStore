@@ -1,3 +1,4 @@
+// src/App.jsx
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { Box, AppBar, Toolbar, Button, Container, Typography, IconButton, Badge } from "@mui/material";
@@ -24,57 +25,52 @@ import Catalog from "./pages/Catalog";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
 import MyOrders from "./pages/MyOrders";
+import OrderDetails from "./pages/OrderDetails";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminOrders from "./pages/AdminOrders";
+import AdminUsers from "./pages/AdminUsers";
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminBanners from "./pages/AdminBanners";
+import AdminProducts from "./pages/AdminProducts";
+import AdminCategories from "./pages/AdminCategories";
 
 function LanguageSwitcher() {
   const { i18n } = useTranslation();
-
   const toggleLanguage = () => {
     const newLang = i18n.language === "he" ? "en" : "he";
     i18n.changeLanguage(newLang);
     localStorage.setItem("i18nextLng", newLang);
-
-    // שינוי כיוון דף
-    document.documentElement.dir = newLang === "he" ? "rtl" : "ltr";
   };
-
-  return (
-    <Button onClick={toggleLanguage} color="inherit">
-      {i18n.language === "he" ? "EN" : "עב"}
-    </Button>
-  );
+  return <Button onClick={toggleLanguage} color="inherit">{i18n.language === "he" ? "EN" : "עב"}</Button>;
 }
 
 function ShopTopBar() {
   const { token, logout } = useAuth();
-  const { items } = useCart();
+  const { count } = useCart();
   const { t } = useTranslation();
 
   return (
     <AppBar position="sticky" color="default" elevation={2} sx={{ bgcolor: "#1E3A8A", color: "white" }}>
       <Toolbar sx={{ gap: 3 }}>
-        {/* לוגו */}
         <Typography variant="h6" sx={{ fontWeight: "bold" }}>
           🐾 PetShop
         </Typography>
 
-        {/* ניווט */}
         <Button component={Link} to="/" sx={{ color: "white" }}>{t("shop.home")}</Button>
         <Button component={Link} to="/catalog" sx={{ color: "white" }}>{t("shop.catalog")}</Button>
 
-        {/* עגלה */}
         <IconButton component={Link} to="/cart" sx={{ color: "white" }}>
-          <Badge badgeContent={items.length} color="secondary">
-            {/* <ShoppingCartIcon /> */}
+          <Badge badgeContent={count} color="secondary">
+            <span role="img" aria-label="cart" style={{ fontSize: 20 }}>🛒</span>
           </Badge>
         </IconButton>
 
         <Box sx={{ flexGrow: 1 }} />
 
-        {/* שפה */}
         <LanguageSwitcher />
 
-        {/* התחברות/התנתקות */}
         {!token ? (
           <>
             <Button component={Link} to="/login" variant="outlined" color="inherit">{t("login.title")}</Button>
@@ -109,8 +105,11 @@ export default function App() {
       <Route path="/product/:id" element={<ShopLayout><ProductDetail /></ShopLayout>} />
       <Route path="/cart" element={<ShopLayout><Cart /></ShopLayout>} />
       <Route path="/checkout" element={<ShopLayout><Checkout /></ShopLayout>} />
+      <Route path="/order-success" element={<ShopLayout><OrderSuccess /></ShopLayout>} />
+      <Route path="/order-success/:id" element={<ShopLayout><OrderSuccess /></ShopLayout>} />
       <Route path="/login" element={<ShopLayout><Login /></ShopLayout>} />
       <Route path="/register" element={<ShopLayout><Register /></ShopLayout>} />
+
       <Route
         path="/my-orders"
         element={
@@ -119,15 +118,25 @@ export default function App() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/order/:id"
+        element={
+          <ProtectedRoute>
+            <ShopLayout><OrderDetails /></ShopLayout>
+          </ProtectedRoute>
+        }
+      />
 
       {/* Admin area */}
-      <Route path="/admin" element={<DashboardLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="products" element={<ProductManager />} />
-        <Route path="categories" element={<CategoryManager />} />
-        <Route path="orders" element={<OrdersPage />} />
-        <Route path="admins" element={<ManageAdmins />} />
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboard />} />
+        <Route path="banners" element={<AdminBanners />} />
+        <Route path="orders" element={<AdminOrders />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="products" element={<AdminProducts />} />
+        <Route path="categories" element={<AdminCategories />} />
       </Route>
+
     </Routes>
   );
 }

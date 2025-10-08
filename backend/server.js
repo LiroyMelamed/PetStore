@@ -1,7 +1,10 @@
 const categoryRoutes = require("./routes/categories.routes");
+const inventoryRoutes = require("./routes/inventory.routes");
 const errorHandler = require("./middlewares/errorHandler");
+const paymentsRoutes = require("./routes/payments.routes");
 const productRoutes = require("./routes/products.routes");
 const bannerRoutes = require("./routes/banners.routes");
+const reviewRoutes = require("./routes/reviews.routes");
 const adminsRoutes = require("./routes/admin.routes");
 const orderRoutes = require("./routes/orders.routes");
 const rateLimit = require("./middlewares/rateLimit");
@@ -30,7 +33,10 @@ app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/admins", adminsRoutes);
 app.use("/api/banners", bannerRoutes);
+app.use("/api/reviews", reviewRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/payments", paymentsRoutes);
+app.use("/api/inventory", inventoryRoutes);
 app.use("/api/categories", categoryRoutes);
 
 // ===== Error Handler =====

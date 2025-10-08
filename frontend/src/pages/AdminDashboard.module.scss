@@ -1,0 +1,88 @@
+.wrapper {
+    display: grid;
+    gap: 16px;
+}
+
+.kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+
+    @media (max-width: 1200px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: 640px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: #0f172a; // slate-900-ish
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 14px 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+}
+
+.cardTitle {
+    font-size: 12px;
+    opacity: .7;
+    margin-bottom: 6px;
+}
+
+.cardValue {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
+    gap: 16px;
+
+    @media (max-width: 1280px) {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 760px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+        padding: 10px 8px;
+        border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    th {
+        font-weight: 600;
+    }
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+
+    select,
+    input[type="month"],
+    input[type="date"] {
+        background: #0b1221;
+        border: 1px solid rgba(255, 255, 255, .08);
+        color: #fff;
+        border-radius: 10px;
+        padding: 8px 10px;
+    }
+}
+
+.chartBox {
+    height: 300px;
+}

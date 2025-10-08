@@ -5,8 +5,9 @@ const auth = require("../middlewares/auth");
 
 // Public
 router.get("/", controller.getAll);
-router.get("/:id", controller.getById);
 router.get("/:id/products", controller.getProductsByCategory);
+
+router.get("/:id", controller.getById);
 
 // Admin
 router.post("/", auth("admin"), controller.create);

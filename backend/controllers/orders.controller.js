@@ -68,9 +68,16 @@ async function updateStatus(req, res) {
     }
 }
 
+async function getAll(req, res) {
+    const { status, from, to, q } = req.query;
+    const rows = await orderService.getAll({ status, from, to, q });
+    res.json(rows);
+}
+
 module.exports = {
     checkout,
     getOrderById,
     getMyOrders,
     updateStatus,
+    getAll
 };

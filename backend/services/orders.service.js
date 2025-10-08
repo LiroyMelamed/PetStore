@@ -98,9 +98,28 @@ async function updateStatus(id, status) {
   );
 }
 
+async function getAll({ status, from, to, q }) {
+  const params = [];
+  const where = [];
+  if (status) { params.push(status); where.push(`status = $${params.length}::order_status`); }
+  if (from) { params.push(from); where.push(`created_at >= $${params.length}`); }
+  if (to) { params.push(to); where.push(`created_at <  $${params.length}`); }
+  if (q) { params.push(`%${q}%`); where.push(`(customer_email ILIKE $${params.length} OR CAST(id AS TEXT) ILIKE $${params.length})`); }
+
+  const sql = `
+    SELECT id, user_id, subtotal, discount_amount, total_price, currency, status, created_at
+    FROM orders
+    ${where.length ? 'WHERE ' + where.join(' AND ') : ''}
+    ORDER BY created_at DESC
+    LIMIT 200
+  `;
+  return db.any(sql, params);
+}
+
 module.exports = {
   checkout,
   getOrderById,
   getMyOrders,
   updateStatus,
+  getAll,
 };

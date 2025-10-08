@@ -2,7 +2,15 @@
     "common": {
         "admin_panel_title": "מערכת ניהול חנות חיות",
         "edit_button": "ערוך",
-        "delete_button": "מחק"
+        "delete_button": "מחק",
+        "create_button": "צור",
+        "save_button": "שמור",
+        "cancel_button": "בטל",
+        "update_button": "עדכן",
+        "filter_button": "סינון",
+        "all_option": "הכל",
+        "yes": "כן",
+        "no": "לא"
     },
     "login": {
         "title": "התחברות",
@@ -53,5 +61,93 @@
         "password": "סיסמה",
         "submit": "שלח",
         "welcome": "ברוך הבא לחנות שלנו!"
+    },
+    "admin": {
+        "nav": {
+            "banners": "באנרים",
+            "orders": "הזמנות",
+            "users": "משתמשים",
+            "products": "מוצרים",
+            "categories": "קטגוריות",
+            "dashboard": "לוח ניהול"
+        },
+        "banners": {
+            "fields": {
+                "title": "כותרת",
+                "linkUrl": "קישור",
+                "imageUrl": "כתובת תמונה",
+                "position": "מיקום",
+                "active": "פעיל"
+            },
+            "activate": "הפעל",
+            "deactivate": "השבת",
+            "confirmDelete": "למחוק את הבאנר?"
+        }
+    },
+    "status": {
+        "active": "פעיל",
+        "inactive": "לא פעיל"
+    },
+    "orders": {
+        "search_placeholder": "חפש מזהה/אימייל",
+        "columns": {
+            "id": "מזהה",
+            "status": "סטטוס",
+            "subtotal": "סכום ביניים",
+            "discount": "הנחה",
+            "total": "סה\"כ",
+            "created": "נוצר"
+        },
+        "statuses": {
+            "pending": "ממתין",
+            "paid": "שולם",
+            "shipped": "נשלח",
+            "delivered": "נמסר",
+            "failed": "נכשל",
+            "canceled": "בוטל"
+        }
+    },
+    "users": {
+        "columns": {
+            "id": "מזהה",
+            "email": "אימייל",
+            "role": "תפקיד",
+            "actions": "פעולות"
+        },
+        "roles": {
+            "user": "משתמש",
+            "manager": "מנהל",
+            "admin": "אדמין"
+        }
+    },
+    "home": {
+        "featured_title": "מוצרים מומלצים",
+        "new_arrivals": "מוצרים חדשים",
+        "selected_brands": "מותגים נבחרים",
+        "browse_catalog": "עבור לקטלוג",
+        "welcome_title": "ברוכים הבאים ל-PetShop",
+        "welcome_sub": "דילים מעולים לחברים הכי טובים שלכם"
+    },
+    "analytics": {
+        "title": "ניתוח נתונים",
+        "from": "מתאריך",
+        "to_exclusive": "עד (לא כולל)",
+        "granularity": "רזולוציית זמן",
+        "granularity_day": "יום",
+        "granularity_week": "שבוע",
+        "granularity_month": "חודש",
+        "kpi_orders": "הזמנות",
+        "kpi_revenue_ils": "הכנסות (₪)",
+        "kpi_avg_order_value": "שווי הזמנה ממוצע",
+        "kpi_active_customers": "לקוחות פעילים",
+        "kpi_active_products": "מוצרים פעילים",
+        "chart_revenue_over_time": "הכנסות לאורך זמן",
+        "chart_orders_by_status": "הזמנות לפי סטטוס",
+        "chart_orders_over_time": "הזמנות לאורך זמן",
+        "table_top_products": "מוצרים מובילים",
+        "col_product": "מוצר",
+        "col_qty": "כמות",
+        "col_revenue": "הכנסות",
+        "period": "תקופה"
     }
 }

@@ -1,0 +1,29 @@
+@use "./variables" as *;
+
+@mixin card {
+    background: linear-gradient(180deg, #0f1520 0%, #0c121b 100%);
+    border: 1px solid $border;
+    border-radius: $radius;
+    box-shadow: $shadow;
+}
+
+@mixin button($variant: "default") {
+    padding: 10px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid $border;
+    color: $text;
+    background: linear-gradient(180deg, #182232 0%, #121821 100%);
+
+    @if $variant =="primary" {
+        border: none;
+        color: #031018;
+        background: linear-gradient(180deg, $brand 0%, $brand-2 100%);
+    }
+
+    @if $variant =="danger" {
+        border-color: #3a1f26;
+        background: #271319;
+        color: #ffd9d9;
+    }
+}

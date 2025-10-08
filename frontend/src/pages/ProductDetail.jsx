@@ -1,178 +1,164 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import {
-    Box,
-    Typography,
-    Button,
-    CircularProgress,
-    Grid,
-    Card,
-    CardMedia,
-    CardContent,
-    TextField,
-} from "@mui/material";
+// src/pages/ProductDetail.jsx
+import * as React from "react";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import CircularProgress from "@mui/material/CircularProgress";
+import Alert from "@mui/material/Alert";
+import TextField from "@mui/material/TextField";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+
+import { fetchProductById } from "../api";
 import { useCart } from "../context/CartContext";
-import {
-    fetchProductById,
-    fetchProductsByCategory,
-    fetchReviewsForProduct,
-    addReview,
-} from "../api";
 
 export default function ProductDetail() {
     const { id } = useParams();
     const { addToCart } = useCart();
 
-    const [product, setProduct] = useState(null);
-    const [related, setRelated] = useState([]);
-    const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    const [newReview, setNewReview] = useState("");
-    const [reviewer, setReviewer] = useState("");
+    const [product, setProduct] = useState(null);
+    const [error, setError] = useState("");
+    const [qty, setQty] = useState(1);
 
     useEffect(() => {
-        const loadProduct = async () => {
+        let cancelled = false;
+        (async () => {
             try {
-                const data = await fetchProductById(id);
-                setProduct(data);
-
-                if (data?.category_id) {
-                    const relatedProducts = await fetchProductsByCategory(data.category_id);
-                    setRelated(relatedProducts.filter((p) => p.id !== data.id));
-                }
-
-                const productReviews = await fetchReviewsForProduct(id);
-                setReviews(productReviews);
-            } catch (err) {
-                console.error("Error loading product:", err);
+                setLoading(true);
+                const p = await fetchProductById(id);
+                if (!cancelled) setProduct(p);
+            } catch (e) {
+                console.error(e);
+                if (!cancelled) setError("לא נמצא מוצר");
             } finally {
-                setLoading(false);
+                if (!cancelled) setLoading(false);
             }
-        };
-
-        loadProduct();
+        })();
+        return () => (cancelled = true);
     }, [id]);
 
-    const handleAddReview = async () => {
-        if (!newReview.trim() || !reviewer.trim()) return;
+    if (loading) {
+        return (
+            <Container maxWidth="lg" sx={{ py: 6, display: "flex", justifyContent: "center" }}>
+                <CircularProgress />
+            </Container>
+        );
+    }
 
-        try {
-            const reviewData = { product_id: id, reviewer, comment: newReview };
-            const added = await addReview(reviewData);
-            setReviews((prev) => [...prev, added]);
-            setNewReview("");
-            setReviewer("");
-        } catch (err) {
-            console.error("Error adding review:", err);
-        }
+    if (error || !product) {
+        return (
+            <Container maxWidth="lg" sx={{ py: 6 }}>
+                <Alert severity="error">{error || "אירעה שגיאה"}</Alert>
+                <Button component={Link} to="/catalog" sx={{ mt: 2 }} variant="outlined">
+                    חזרה לקטלוג
+                </Button>
+            </Container>
+        );
+    }
+
+    const { name, description, price, stock, image_url, category_id } = product;
+
+    const onAddToCart = () => {
+        if (!product) return;
+        const safe = Math.max(1, Number(qty) || 1);
+        addToCart(
+            {
+                id: product.id,
+                name: product.name,
+                price: Number(product.price || 0),
+                image_url: product.image_url,
+            },
+            safe
+        );
     };
 
-    if (loading) return <CircularProgress sx={{ display: "block", mx: "auto", mt: 5 }} />;
-    if (!product) return <Typography variant="h6">המוצר לא נמצא</Typography>;
-
     return (
-        <Box sx={{ mt: 4 }}>
-            {/* פרטי מוצר */}
-            <Grid container spacing={4}>
+        <Container maxWidth="lg" sx={{ py: 3 }}>
+            <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-                    <Card>
-                        <CardMedia
-                            component="img"
-                            image={product.image_url || "/placeholder.png"}
-                            alt={product.name}
-                            sx={{ objectFit: "contain", height: 400 }}
+                    <Box
+                        sx={{
+                            borderRadius: 3,
+                            overflow: "hidden",
+                            boxShadow: 2,
+                            aspectRatio: "1 / 1",
+                            bgcolor: "#fafafa",
+                        }}
+                    >
+                        <img
+                            src={image_url || "https://placehold.co/800x800?text=PetStore"}
+                            alt={name}
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />
+                    </Box>
+                </Grid>
+
+                <Grid item xs={12} md={6}>
+                    <Typography variant="h4" sx={{ fontWeight: 900 }}>
+                        {name}
+                    </Typography>
+                    <Typography variant="h5" sx={{ fontWeight: 800, mt: 1 }}>
+                        ₪{Number(price || 0).toFixed(2)}
+                    </Typography>
+                    <Typography
+                        variant="body2"
+                        sx={{ mt: 1 }}
+                        color={Number(stock || 0) > 0 ? "success.main" : "error.main"}
+                    >
+                        {Number(stock || 0) > 0 ? `במלאי (${stock})` : "חסר במלאי"}
+                    </Typography>
+
+                    <Divider sx={{ my: 2 }} />
+
+                    <Typography variant="body1" sx={{ whiteSpace: "pre-wrap" }}>
+                        {description || "—"}
+                    </Typography>
+
+                    <Box sx={{ mt: 3, display: "flex", gap: 2, alignItems: "center" }}>
+                        <TextField
+                            label="כמות"
+                            type="number"
+                            size="small"
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                            inputProps={{ min: 1, max: 999 }}
+                            sx={{ width: 120 }}
+                        />
+                        <Button
+                            variant="contained"
+                            size="large"
+                            onClick={onAddToCart}
+                            disabled={Number(stock || 0) <= 0}
+                        >
+                            הוסף לעגלה
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            size="large"
+                            onClick={() => (window.location.href = "/catalog")}
+                        >
+                            חזרה לקטלוג
+                        </Button>
+                    </Box>
+
+                    <Card sx={{ mt: 3 }}>
+                        <CardContent>
+                            <Typography variant="subtitle2" color="text.secondary">
+                                קטגוריה: {category_id ?? "—"}
+                            </Typography>
+                            <Typography variant="subtitle2" color="text.secondary">
+                                מזהה מוצר: {id}
+                            </Typography>
+                        </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <Typography variant="h4" gutterBottom>{product.name}</Typography>
-                    <Typography variant="h6" color="text.secondary" gutterBottom>
-                        ₪{product.price}
-                    </Typography>
-                    <Typography sx={{ mb: 2 }}>{product.description}</Typography>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => addToCart(product)}
-                    >
-                        הוסף לסל
-                    </Button>
-                </Grid>
             </Grid>
-
-            {/* חוות דעת */}
-            <Box sx={{ mt: 6 }}>
-                <Typography variant="h5" gutterBottom>חוות דעת</Typography>
-                {reviews.length === 0 ? (
-                    <Typography color="text.secondary">אין חוות דעת עדיין</Typography>
-                ) : (
-                    reviews.map((rev, i) => (
-                        <Box key={i} sx={{ borderBottom: "1px solid #eee", py: 1 }}>
-                            <Typography variant="subtitle2">{rev.reviewer}</Typography>
-                            <Typography>{rev.comment}</Typography>
-                        </Box>
-                    ))
-                )}
-
-                {/* הוספת חוות דעת */}
-                <Box sx={{ mt: 3 }}>
-                    <TextField
-                        label="השם שלך"
-                        fullWidth
-                        size="small"
-                        value={reviewer}
-                        onChange={(e) => setReviewer(e.target.value)}
-                        sx={{ mb: 2 }}
-                    />
-                    <TextField
-                        label="כתוב חוות דעת"
-                        fullWidth
-                        multiline
-                        rows={3}
-                        value={newReview}
-                        onChange={(e) => setNewReview(e.target.value)}
-                    />
-                    <Button
-                        variant="outlined"
-                        sx={{ mt: 2 }}
-                        onClick={handleAddReview}
-                    >
-                        שלח חוות דעת
-                    </Button>
-                </Box>
-            </Box>
-
-            {/* מוצרים קשורים */}
-            {related.length > 0 && (
-                <Box sx={{ mt: 6 }}>
-                    <Typography variant="h5" gutterBottom>מוצרים קשורים</Typography>
-                    <Grid container spacing={2}>
-                        {related.map((rel) => (
-                            <Grid item key={rel.id} xs={12} sm={6} md={3}>
-                                <Card>
-                                    <CardMedia
-                                        component="img"
-                                        height="180"
-                                        image={rel.image_url || "/placeholder.png"}
-                                        alt={rel.name}
-                                    />
-                                    <CardContent>
-                                        <Typography variant="subtitle1">{rel.name}</Typography>
-                                        <Typography color="text.secondary">₪{rel.price}</Typography>
-                                        <Button
-                                            variant="text"
-                                            onClick={() => addToCart(rel)}
-                                        >
-                                            הוסף לסל
-                                        </Button>
-                                    </CardContent>
-                                </Card>
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Box>
-            )}
-        </Box>
+        </Container>
     );
 }
