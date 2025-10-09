@@ -68,8 +68,8 @@ async function metricsOverview({ from, to }) {
     const ordersRow = await db.one(
         `
     SELECT
-      COALESCE(COUNT(*) FILTER (WHERE status NOT IN ('canceled','failed')), 0)::int         AS orders_count,
-      COALESCE(SUM(total_price) FILTER (WHERE status NOT IN ('canceled','failed')), 0)::numeric AS revenue,
+      COALESCE(COUNT(*) FILTER (WHERE status NOT IN ('canceled','failed')), 0)::int                AS orders_count,
+      COALESCE(SUM(total_price) FILTER (WHERE status NOT IN ('canceled','failed')), 0)::numeric    AS revenue,
       COALESCE(COUNT(DISTINCT user_id) FILTER (WHERE status NOT IN ('canceled','failed')), 0)::int AS active_customers
     FROM orders
     WHERE created_at >= $1 AND created_at < $2
@@ -97,7 +97,7 @@ async function metricsOverview({ from, to }) {
         revenue: ordersRow.revenue,
         active_customers: ordersRow.active_customers,
         active_products: prodRow.active_products,
-        avg_order_value: aovRow.aov
+        avg_order_value: aovRow.aov,
     };
 }
 
@@ -165,12 +165,13 @@ async function topProducts({ from, to, limit = 8 }) {
       p.id,
       p.name,
       COALESCE(SUM(oi.quantity), 0)::int AS qty,
-      COALESCE(SUM(oi.quantity * COALESCE(oi.unit_price, oi.price, p.price, 0)), 0)::numeric AS revenue
+      COALESCE(SUM(oi.quantity * COALESCE(oi.price_per_item, p.price, 0)), 0)::numeric(12,2) AS revenue
     FROM order_items oi
-    JOIN orders o   ON o.id = oi.order_id
+    JOIN orders   o ON o.id = oi.order_id
     JOIN products p ON p.id = oi.product_id
-    WHERE o.created_at >= $1 AND o.created_at < $2
-      AND o.status NOT IN ('canceled','failed')
+    WHERE o.created_at >= $1
+      AND o.created_at <  $2
+      AND o.status IN ('paid','shipped','delivered')
     GROUP BY p.id, p.name
     ORDER BY revenue DESC
     LIMIT $3

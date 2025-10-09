@@ -4,13 +4,40 @@
         "edit_button": "Edit",
         "delete_button": "Delete",
         "create_button": "Create",
+        "add_button": "Add",
         "save_button": "Save",
         "cancel_button": "Cancel",
         "update_button": "Update",
         "filter_button": "Filter",
         "all_option": "All",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "loading": "Loading...",
+        "actions": "Actions"
+    },
+    "table": {
+        "no_results": "No results",
+        "empty": "No data available",
+        "items_count": "items"
+    },
+    "pagination": {
+        "prev": "Previous",
+        "next": "Next",
+        "page": "Page",
+        "of": "of"
+    },
+    "toasts": {
+        "created_success": "Created successfully",
+        "updated_success": "Updated successfully",
+        "deleted_success": "Deleted successfully",
+        "action_failed": "Action failed"
+    },
+    "validation": {
+        "required": "This field is required",
+        "min_length": "Too short",
+        "max_length": "Too long",
+        "invalid_email": "Invalid email",
+        "positive_number": "Please enter a positive number"
     },
     "login": {
         "title": "Login",
@@ -35,54 +62,16 @@
             "manage_admins": "Manage Admins"
         }
     },
-    "product_manager": {
-        "title": "Product Management",
-        "welcome_message": "Here you can add, update, and delete products.",
-        "add_button": "Add Product",
-        "table": {
-            "name": "Product Name",
-            "price": "Price",
-            "stock": "Stock",
-            "actions": "Actions"
-        },
-        "error": "An error occurred while loading products."
-    },
-    "category_manager": {
-        "title": "Category Management",
-        "welcome_message": "Here you can add, update, and delete categories."
-    },
-    "shop": {
-        "home": "Home",
-        "catalog": "Catalog",
-        "cart": "Cart",
-        "myOrders": "My Orders",
-        "checkout": "Checkout",
-        "email": "Email",
-        "password": "Password",
-        "submit": "Submit",
-        "welcome": "Welcome to our shop!"
-    },
-    "admin": {
-        "nav": {
-            "banners": "Banners",
-            "orders": "Orders",
-            "users": "Users",
-            "products": "Products",
-            "categories": "Categories",
-            "dashboard": "Dashboard"
-        },
-        "banners": {
-            "fields": {
-                "title": "Title",
-                "linkUrl": "Link URL",
-                "imageUrl": "Image URL",
-                "position": "Position",
-                "active": "Active"
-            },
-            "activate": "Activate",
-            "deactivate": "Deactivate",
-            "confirmDelete": "Delete banner?"
-        }
+    "home": {
+        "featured_title": "Featured Products",
+        "new_arrivals": "New Arrivals",
+        "selected_brands": "Selected Brands",
+        "browse_catalog": "Browse Catalog",
+        "welcome_title": "Welcome to PetShop",
+        "welcome_sub": "Great deals for your best friends",
+        "categories_title": "Shop by Category",
+        "recommended_title": "Recommended for You",
+        "top_brands": "Top Brands"
     },
     "status": {
         "active": "active",
@@ -120,13 +109,92 @@
             "admin": "Admin"
         }
     },
-    "home": {
-        "featured_title": "Featured Products",
-        "new_arrivals": "New Arrivals",
-        "selected_brands": "Selected Brands",
-        "browse_catalog": "Browse Catalog",
-        "welcome_title": "Welcome to PetShop",
-        "welcome_sub": "Great deals for your best friends"
+    "product_manager": {
+        "title": "Product Management",
+        "welcome_message": "Here you can add, update, and delete products.",
+        "add_button": "Add Product",
+        "table": {
+            "name": "Product Name",
+            "price": "Price",
+            "stock": "Stock",
+            "actions": "Actions"
+        },
+        "error": "An error occurred while loading products."
+    },
+    "category_manager": {
+        "title": "Category Management",
+        "welcome_message": "Here you can add, update, and delete categories."
+    },
+    "admin": {
+        "nav": {
+            "banners": "Banners",
+            "orders": "Orders",
+            "users": "Users",
+            "products": "Products",
+            "categories": "Categories",
+            "dashboard": "Dashboard",
+            "analytics": "Analytics"
+        },
+        "banners": {
+            "fields": {
+                "title": "Title",
+                "linkUrl": "Link URL",
+                "imageUrl": "Image URL",
+                "position": "Position",
+                "active": "Active"
+            },
+            "activate": "Activate",
+            "deactivate": "Deactivate",
+            "confirmDelete": "Delete banner?",
+            "search_placeholder": "Search banners",
+            "items_count": "items"
+        },
+        "products": {
+            "confirmDelete": "Delete this product?",
+            "search_placeholder": "Search by name/id/category",
+            "items_count": "items",
+            "fields": {
+                "name": "Name",
+                "categoryId": "Category ID",
+                "price": "Price",
+                "active": "Active",
+                "seoTitle": "SEO Title",
+                "seoDescription": "SEO Description"
+            }
+        },
+        "categories": {
+            "confirmDelete": "Delete this category?",
+            "search_placeholder": "Search by name/SEO",
+            "items_count": "items",
+            "fields": {
+                "name": "Name",
+                "seoTitle": "SEO Title",
+                "seoDescription": "SEO Description"
+            }
+        },
+        "users": {
+            "search_placeholder": "Search users",
+            "items_count": "users",
+            "confirmDelete": "Remove this user?",
+            "fields": {
+                "email": "Email",
+                "role": "Role"
+            }
+        },
+        "orders": {
+            "search_placeholder": "Search id/email",
+            "items_count": "orders",
+            "confirmCancel": "Cancel this order?",
+            "fields": {
+                "id": "Order ID",
+                "status": "Status",
+                "total": "Total"
+            }
+        },
+        "dashboard": {
+            "welcome": "Welcome back",
+            "quick_actions": "Quick actions"
+        }
     },
     "analytics": {
         "title": "Analytics",
@@ -149,5 +217,32 @@
         "col_qty": "Qty",
         "col_revenue": "Revenue",
         "period": "Period"
+    },
+    "shop": {
+        "home": "Home",
+        "catalog": "Catalog",
+        "cart": "Cart",
+        "myOrders": "My Orders",
+        "checkout": "Checkout",
+        "email": "Email",
+        "password": "Password",
+        "submit": "Submit",
+        "welcome": "Welcome to our shop!"
+    },
+    "language": {
+        "en": "English",
+        "he": "Hebrew"
+    },
+    "footer": {
+        "shop": "Shop",
+        "company": "Company",
+        "legal": "Legal",
+        "about": "About us",
+        "contact": "Contact us",
+        "careers": "Careers",
+        "terms": "Terms & Conditions",
+        "privacy": "Privacy Policy",
+        "shipping": "Shipping & Returns",
+        "rights": "All rights reserved."
     }
 }

@@ -27,7 +27,7 @@ async function updateProduct(id, { name, description, price, stock, category_id,
 }
 
 async function deleteProduct(id) {
-    return db.none("DELETE FROM products WHERE id=$1", [id]);
+    return db.none(`UPDATE products SET is_active=false, updated_at=NOW() WHERE id=$1`, [id]);
 }
 
 async function getFeaturedProducts() {

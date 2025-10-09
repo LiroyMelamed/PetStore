@@ -1,14 +1,16 @@
-$bg: #0b0f14;
-$panel: #121821;
-$muted: #8aa0b2;
-$text: #e7eef5;
-$brand: #6ae3ff;
-$brand-2: #7bffb7;
-$danger: #ff6b6b;
-$border: #1e2836;
+$bg: #F7F9FC; // page background
+$panel: #FFFFFF; // cards/panels
+$muted: #6B7280; // secondary text
+$text: #0F172A; // primary text
+
+$brand: #FFB020; // orange accent
+$brand-2: #FF8A4C; // orange gradient end / hover
+
+$danger: #EF4444;
+$border: #E5E7EB;
 $radius: 14px;
 $space: 14px;
-$shadow: 0 10px 30px rgba(0, 0, 0, .35);
+$shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
 
 $bp-sm: 640px;
 $bp-md: 960px;

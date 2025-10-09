@@ -8,22 +8,28 @@
 
 .toolbar {
     @include card();
-    padding: 12px;
+    padding: 14px;
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
     justify-content: space-between;
+    background: $panel;
 }
 
 .formGrid {
     display: grid;
     gap: $space;
     grid-template-columns: repeat(2, 1fr);
+
+    @media (max-width: $bp-md) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .tableCard {
     @include card();
-    padding: 12px;
+    padding: 14px;
+    background: $panel;
 }
 
 .actions {

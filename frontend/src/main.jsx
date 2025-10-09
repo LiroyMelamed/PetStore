@@ -11,6 +11,7 @@ import rtlPlugin from 'stylis-plugin-rtl';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
+import "./styles/global.scss";
 
 // פונקציה ליצירת cache עם תמיכה ב-RTL, תלוי בשפה
 const createEmotionCache = (isRtl) => {

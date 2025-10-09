@@ -1,3 +1,6 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
 .wrapper {
     display: grid;
     gap: 16px;
@@ -18,22 +21,20 @@
 }
 
 .card {
-    background: #0f172a; // slate-900-ish
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 14px;
-    padding: 14px 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, .25);
+    @include card();
+    padding: 16px;
 }
 
 .cardTitle {
     font-size: 12px;
-    opacity: .7;
+    color: $muted;
     margin-bottom: 6px;
 }
 
 .cardValue {
     font-size: 24px;
     font-weight: 700;
+    color: $text;
 }
 
 .grid {
@@ -57,11 +58,14 @@
     th,
     td {
         padding: 10px 8px;
-        border-bottom: 1px solid rgba(255, 255, 255, .06);
+        border-bottom: 1px solid $border;
+        background: #fff;
     }
 
     th {
         font-weight: 600;
+        color: $muted;
+        background: #FAFBFC;
     }
 }
 
@@ -75,14 +79,15 @@
     select,
     input[type="month"],
     input[type="date"] {
-        background: #0b1221;
-        border: 1px solid rgba(255, 255, 255, .08);
-        color: #fff;
+        background: #fff;
+        border: 1px solid $border;
+        color: $text;
         border-radius: 10px;
         padding: 8px 10px;
     }
 }
 
 .chartBox {
-    height: 300px;
+    @include card();
+    height: 320px;
 }

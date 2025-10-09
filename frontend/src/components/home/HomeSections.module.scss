@@ -1,0 +1,253 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.section {
+    margin: 28px 0;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 12px;
+
+    h2 {
+        font-size: 1.25rem;
+        font-weight: 800;
+        margin: 0;
+        color: $text;
+    }
+}
+
+/* HERO */
+.hero {
+    margin: 16px 0 24px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #FFF;
+    border: 1px solid $border;
+    box-shadow: $shadow;
+
+    .slick-dots {
+        bottom: 8px;
+
+        li button:before {
+            font-size: 10px;
+            color: $brand;
+            opacity: .6;
+        }
+
+        li.slick-active button:before {
+            color: $brand;
+            opacity: 1;
+        }
+    }
+}
+
+.heroSlide,
+.heroBanner {
+    display: block;
+
+    img {
+        width: 100%;
+        height: clamp(220px, 36vw, 460px);
+        object-fit: cover;
+        display: block;
+    }
+}
+
+/* PRODUCTS slider */
+.productsSlider {
+    .slick-slide {
+        padding: 6px;
+    }
+}
+
+.productCard {
+    @include card();
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(17, 24, 39, .08);
+    }
+}
+
+.productThumb {
+    background: #FAFBFC;
+    border-bottom: 1px solid $border;
+    display: grid;
+    place-items: center;
+    height: 180px;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.productInfo {
+    padding: 12px 14px;
+    display: grid;
+    gap: 8px;
+}
+
+.productName {
+    font-weight: 700;
+    line-height: 1.25;
+    min-height: 2.4em;
+    color: $text;
+}
+
+.productPrice {
+    color: $brand;
+    font-weight: 800;
+
+    .currency {
+        color: $muted;
+        font-weight: 600;
+        margin-inline-start: 4px;
+    }
+}
+
+/* CATEGORIES slider */
+.categoriesSlider {
+    .slick-slide {
+        padding: 6px;
+    }
+}
+
+.categoryCube {
+    background: #FFF;
+    border: 1px solid $border;
+    border-radius: 20px;
+    padding: 16px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: $shadow;
+    transition: transform .15s ease, box-shadow .15s ease;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(17, 24, 39, .08);
+    }
+}
+
+.categoryIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    margin: 0 auto 10px;
+    display: grid;
+    place-items: center;
+    background: #FFF7ED; // warm orange tint
+    font-size: 26px;
+}
+
+.categoryName {
+    font-weight: 700;
+    color: $text;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* BRANDS */
+.brandsSlider {
+    .slick-slide {
+        padding: 6px;
+    }
+}
+
+.brandTile {
+    background: #FFF;
+    border: 1px solid $border;
+    border-radius: 16px;
+    padding: 10px;
+    display: grid;
+    place-items: center;
+    height: 96px;
+    box-shadow: $shadow;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: grayscale(.25);
+    }
+}
+
+/* FOOTER (light) */
+.footer {
+    margin-top: 36px;
+    border-top: 1px solid $border;
+    background: #FFFFFF;
+    box-shadow: 0 -6px 16px rgba(17, 24, 39, .04);
+}
+
+.footerGrid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 28px 0;
+
+    @media (max-width: $bp-md) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media (max-width: $bp-sm) {
+        grid-template-columns: 1fr;
+    }
+
+    ul {
+        margin: 8px 0 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            margin: 6px 0;
+        }
+
+        a {
+            color: $muted;
+
+            &:hover {
+                color: $brand;
+            }
+        }
+    }
+}
+
+.footerBrand {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: $text;
+}
+
+.footerDesc {
+    color: $muted;
+    margin: 8px 0 0;
+}
+
+.footerTitle {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: $muted;
+    letter-spacing: .06em;
+}
+
+.footerBottom {
+    border-top: 1px solid $border;
+    padding: 12px 0 18px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    color: $muted;
+    font-size: 12px;
+}

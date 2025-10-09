@@ -1,9 +1,8 @@
 // src/components/LanguageSwitcher.jsx
-import React from "react";
 import { Button } from "@mui/material";
 import i18n from "../i18n";
 
-export default function LanguageSwitcher() {
+export default function LanguageSwitcher({ className }) {
     const toggleLanguage = () => {
         const newLang = i18n.language === "he" ? "en" : "he";
         i18n.changeLanguage(newLang);
@@ -12,7 +11,7 @@ export default function LanguageSwitcher() {
     };
 
     return (
-        <Button onClick={toggleLanguage}>
+        <Button onClick={toggleLanguage} className={className}>
             {i18n.language === "he" ? "English" : "עברית"}
         </Button>
     );

@@ -1,0 +1,85 @@
+@use "./variables" as *;
+@use "./mixins" as *;
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    height: 100%;
+}
+
+body {
+    background: $bg;
+    color: $text;
+    font-family: Inter, system-ui, sans-serif;
+}
+
+a {
+    color: $brand;
+    text-decoration: none;
+}
+
+.btn {
+    @include button();
+}
+
+.btn--primary {
+    @include button("primary");
+}
+
+.btn--danger {
+    @include button("danger");
+}
+
+.card {
+    @include card();
+}
+
+.panel {
+    padding: 18px;
+    border-radius: $radius;
+    background: $panel;
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid $border;
+    color: $muted;
+    font-size: 12px;
+    background: #fff;
+}
+
+.input,
+select {
+    background: #fff;
+    border: 1px solid $border;
+    color: $text;
+    padding: 10px 12px;
+    border-radius: 10px;
+    outline: none;
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+        padding: 12px;
+        border-bottom: 1px solid $border;
+        background: #fff;
+    }
+
+    th {
+        color: $muted;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 12px;
+        background: #FAFBFC;
+    }
+}

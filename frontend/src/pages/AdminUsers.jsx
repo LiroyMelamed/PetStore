@@ -33,10 +33,10 @@ export default function AdminUsers() {
         <div style={{ padding: 16 }}>
             <table width="100%" cellPadding={8} style={{ borderCollapse: "collapse" }}>
                 <thead><tr>
-                    <th>{t("users.columns.id")}</th>
-                    <th>{t("users.columns.email")}</th>
-                    <th>{t("users.columns.role")}</th>
-                    <th>{t("users.columns.actions")}</th>
+                    <th style={{ textAlign: "right" }}>{t("users.columns.id")}</th>
+                    <th style={{ textAlign: "right" }}>{t("users.columns.email")}</th>
+                    <th style={{ textAlign: "right" }}>{t("users.columns.role")}</th>
+                    <th style={{ textAlign: "right" }}>{t("users.columns.actions")}</th>
                 </tr></thead>
                 <tbody>
                     {rows.map(u => (

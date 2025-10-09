@@ -10,15 +10,24 @@
     display: grid;
     gap: $space;
     grid-template-columns: repeat(3, 1fr);
+
+    @media (max-width: $bp-md) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: $bp-sm) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .card {
     @include card();
-    padding: 12px;
+    padding: 14px;
 }
 
 .title {
     font-weight: 600;
+    color: $text;
 }
 
 .img {
@@ -28,6 +37,7 @@
     object-fit: cover;
     aspect-ratio: 16/9;
     border: 1px solid $border;
+    background: #fff;
 }
 
 .row {

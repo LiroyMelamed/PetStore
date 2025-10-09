@@ -4,13 +4,40 @@
         "edit_button": "ערוך",
         "delete_button": "מחק",
         "create_button": "צור",
+        "add_button": "הוסף",
         "save_button": "שמור",
         "cancel_button": "בטל",
         "update_button": "עדכן",
         "filter_button": "סינון",
         "all_option": "הכל",
         "yes": "כן",
-        "no": "לא"
+        "no": "לא",
+        "loading": "טוען...",
+        "actions": "פעולות"
+    },
+    "table": {
+        "no_results": "לא נמצאו תוצאות",
+        "empty": "אין נתונים להצגה",
+        "items_count": "פריטים"
+    },
+    "pagination": {
+        "prev": "הקודם",
+        "next": "הבא",
+        "page": "עמוד",
+        "of": "מתוך"
+    },
+    "toasts": {
+        "created_success": "נוצר בהצלחה",
+        "updated_success": "עודכן בהצלחה",
+        "deleted_success": "נמחק בהצלחה",
+        "action_failed": "הפעולה נכשלה"
+    },
+    "validation": {
+        "required": "שדה חובה",
+        "min_length": "קצר מדי",
+        "max_length": "ארוך מדי",
+        "invalid_email": "אימייל לא תקין",
+        "positive_number": "נא להזין מספר חיובי"
     },
     "login": {
         "title": "התחברות",
@@ -22,7 +49,7 @@
         "title": "הרשמה",
         "username_label": "שם משתמש",
         "password_label": "סיסמה",
-        "submit_button": "הרשם"
+        "submit_button": "הירשם"
     },
     "logout_button": "התנתקות",
     "dashboard": {
@@ -35,54 +62,16 @@
             "manage_admins": "ניהול אדמינים"
         }
     },
-    "product_manager": {
-        "title": "ניהול מוצרים",
-        "welcome_message": "כאן תוכל להוסיף, לעדכן ולמחוק מוצרים.",
-        "add_button": "הוסף מוצר",
-        "table": {
-            "name": "שם מוצר",
-            "price": "מחיר",
-            "stock": "מלאי",
-            "actions": "פעולות"
-        },
-        "error": "אירעה שגיאה בטעינת המוצרים."
-    },
-    "category_manager": {
-        "title": "ניהול קטגוריות",
-        "welcome_message": "כאן תוכל להוסיף, לעדכן ולמחוק קטגוריות."
-    },
-    "shop": {
-        "home": "בית",
-        "catalog": "קטלוג",
-        "cart": "סל",
-        "myOrders": "ההזמנות שלי",
-        "checkout": "תשלום",
-        "email": "אימייל",
-        "password": "סיסמה",
-        "submit": "שלח",
-        "welcome": "ברוך הבא לחנות שלנו!"
-    },
-    "admin": {
-        "nav": {
-            "banners": "באנרים",
-            "orders": "הזמנות",
-            "users": "משתמשים",
-            "products": "מוצרים",
-            "categories": "קטגוריות",
-            "dashboard": "לוח ניהול"
-        },
-        "banners": {
-            "fields": {
-                "title": "כותרת",
-                "linkUrl": "קישור",
-                "imageUrl": "כתובת תמונה",
-                "position": "מיקום",
-                "active": "פעיל"
-            },
-            "activate": "הפעל",
-            "deactivate": "השבת",
-            "confirmDelete": "למחוק את הבאנר?"
-        }
+    "home": {
+        "featured_title": "מוצרים מומלצים",
+        "new_arrivals": "מוצרים חדשים",
+        "selected_brands": "מותגים נבחרים",
+        "browse_catalog": "עבור לקטלוג",
+        "welcome_title": "ברוכים הבאים ל-PetShop",
+        "welcome_sub": "דילים מעולים לחברים הכי טובים שלכם",
+        "categories_title": "קנייה לפי קטגוריה",
+        "recommended_title": "מומלץ עבורך",
+        "top_brands": "מותגים מובילים"
     },
     "status": {
         "active": "פעיל",
@@ -120,13 +109,92 @@
             "admin": "אדמין"
         }
     },
-    "home": {
-        "featured_title": "מוצרים מומלצים",
-        "new_arrivals": "מוצרים חדשים",
-        "selected_brands": "מותגים נבחרים",
-        "browse_catalog": "עבור לקטלוג",
-        "welcome_title": "ברוכים הבאים ל-PetShop",
-        "welcome_sub": "דילים מעולים לחברים הכי טובים שלכם"
+    "product_manager": {
+        "title": "ניהול מוצרים",
+        "welcome_message": "כאן תוכל להוסיף, לעדכן ולמחוק מוצרים.",
+        "add_button": "הוסף מוצר",
+        "table": {
+            "name": "שם מוצר",
+            "price": "מחיר",
+            "stock": "מלאי",
+            "actions": "פעולות"
+        },
+        "error": "אירעה שגיאה בטעינת המוצרים."
+    },
+    "category_manager": {
+        "title": "ניהול קטגוריות",
+        "welcome_message": "כאן תוכל להוסיף, לעדכן ולמחוק קטגוריות."
+    },
+    "admin": {
+        "nav": {
+            "banners": "באנרים",
+            "orders": "הזמנות",
+            "users": "משתמשים",
+            "products": "מוצרים",
+            "categories": "קטגוריות",
+            "dashboard": "לוח ניהול",
+            "analytics": "ניתוח נתונים"
+        },
+        "banners": {
+            "fields": {
+                "title": "כותרת",
+                "linkUrl": "קישור",
+                "imageUrl": "כתובת תמונה",
+                "position": "מיקום",
+                "active": "פעיל"
+            },
+            "activate": "הפעל",
+            "deactivate": "השבת",
+            "confirmDelete": "למחוק את הבאנר?",
+            "search_placeholder": "חפש באנרים",
+            "items_count": "פריטים"
+        },
+        "products": {
+            "confirmDelete": "למחוק את המוצר?",
+            "search_placeholder": "חפש לפי שם/מזהה/קטגוריה",
+            "items_count": "פריטים",
+            "fields": {
+                "name": "שם",
+                "categoryId": "מזהה קטגוריה",
+                "price": "מחיר",
+                "active": "פעיל",
+                "seoTitle": "כותרת SEO",
+                "seoDescription": "תיאור SEO"
+            }
+        },
+        "categories": {
+            "confirmDelete": "למחוק את הקטגוריה?",
+            "search_placeholder": "חפש לפי שם/SEO",
+            "items_count": "פריטים",
+            "fields": {
+                "name": "שם",
+                "seoTitle": "כותרת SEO",
+                "seoDescription": "תיאור SEO"
+            }
+        },
+        "users": {
+            "search_placeholder": "חפש משתמשים",
+            "items_count": "משתמשים",
+            "confirmDelete": "להסיר משתמש זה?",
+            "fields": {
+                "email": "אימייל",
+                "role": "תפקיד"
+            }
+        },
+        "orders": {
+            "search_placeholder": "חפש מזהה/אימייל",
+            "items_count": "הזמנות",
+            "confirmCancel": "לבטל הזמנה זו?",
+            "fields": {
+                "id": "מזהה הזמנה",
+                "status": "סטטוס",
+                "total": "סה\"כ"
+            }
+        },
+        "dashboard": {
+            "welcome": "ברוך השב",
+            "quick_actions": "פעולות מהירות"
+        }
     },
     "analytics": {
         "title": "ניתוח נתונים",
@@ -149,5 +217,32 @@
         "col_qty": "כמות",
         "col_revenue": "הכנסות",
         "period": "תקופה"
+    },
+    "shop": {
+        "home": "בית",
+        "catalog": "קטלוג",
+        "cart": "סל",
+        "myOrders": "ההזמנות שלי",
+        "checkout": "תשלום",
+        "email": "אימייל",
+        "password": "סיסמה",
+        "submit": "שלח",
+        "welcome": "ברוך הבא לחנות שלנו!"
+    },
+    "language": {
+        "en": "אנגלית",
+        "he": "עברית"
+    },
+    "footer": {
+        "shop": "חנות",
+        "company": "חברה",
+        "legal": "משפטי",
+        "about": "עלינו",
+        "contact": "צור קשר",
+        "careers": "קריירה",
+        "terms": "תקנון",
+        "privacy": "מדיניות פרטיות",
+        "shipping": "משלוח והחזרות",
+        "rights": "כל הזכויות שמורות."
     }
 }
