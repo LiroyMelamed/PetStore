@@ -2,186 +2,179 @@
 @use "../styles/mixins" as *;
 
 .page {
-    padding-block: 16px 32px;
+    padding-top: 8px;
 }
 
+/* ------- Breadcrumb ------- */
 .breadcrumb {
-    color: $muted;
-    font-size: 12px;
-    margin-bottom: 10px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin: 8px 0 16px;
 
     a {
-        color: inherit;
+        color: $brand;
+
+        &:hover {
+            text-decoration: underline;
+        }
     }
 
-    span.sep {
-        margin: 0 6px;
-        color: #c4c7ce;
+    .sep {
+        color: $muted;
     }
 }
 
-.heroGrid {
-    align-items: stretch;
+/* ------- HERO LAYOUT FIX ------- */
+/* The Grid container is a flex container; we force row-reverse + no-wrap on md+ */
+.heroGrid.MuiGrid-container {
+    /* mobile first: stack */
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    @media (min-width: 900px) {
+        /* md breakpoint in MUI default theme */
+        flex-direction: row-reverse;
+        /* image on the right */
+        flex-wrap: nowrap;
+        /* <-- THIS prevents the image from dropping below */
+        align-items: stretch;
+    }
 }
 
+.contentCol,
+.imageCol {
+    display: flex;
+    flex-direction: column;
+}
+
+/* ------- Image ------- */
+.imageWrap {
+    @include card();
+    overflow: hidden;
+    background: transparent;
+
+    img {
+        width: 20rem;
+        height: 20rem;
+        object-fit: fill;
+    }
+}
+
+/* ------- Title/Price ------- */
 .title {
     font-weight: 900;
-    line-height: 1.2;
-    margin: 0;
-    color: $text;
+    margin: 0 0 6px;
 }
 
 .priceRow {
     display: flex;
-    align-items: center;
     gap: 10px;
-    margin-top: 6px;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .price {
-    font-size: clamp(22px, 3.2vw, 28px);
+    font-size: 1.8rem;
     font-weight: 900;
     color: $brand;
 
     .currency {
-        font-weight: 700;
+        margin-inline-end: 4px;
         color: $muted;
-        margin-inline-start: 2px;
+        font-weight: 700;
     }
 }
 
 .stockOk {
-    color: #059669;
-    /* success */
-    font-weight: 600;
+    color: #16a34a;
+    font-weight: 700;
 }
 
 .stockBad {
-    color: #B91C1C;
-    /* error */
-    font-weight: 600;
+    color: #dc2626;
+    font-weight: 700;
 }
 
-.imageWrap {
-    @include card();
-    overflow: hidden;
-    border-radius: 16px;
-    height: clamp(280px, 40vw, 460px);
-    background: #fff;
-    display: grid;
-    place-items: center;
+/* ------- Qty / Actions ------- */
+.qtyRow {
+    margin: 10px 0;
+}
 
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-    }
+.qtyInput {
+    width: 120px;
 }
 
 .actionsRow {
     display: flex;
     gap: 10px;
     align-items: center;
-    margin-top: 14px;
-
-    .addBtn {
-        @include button("primary");
-        font-size: 16px;
-        padding: 12px 18px;
-    }
-
-    .backBtn {
-        @include button();
-        font-size: 16px;
-        padding: 12px 18px;
-        background: #fff;
-    }
-}
-
-.qtyRow {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 12px;
-}
-
-.qtyInput {
-    width: 120px;
-
-    /* style MUI input inside */
-    :global(.MuiOutlinedInput-root) {
-        background: #fff;
-        border-radius: 10px;
-    }
+    margin: 10px 0 14px;
 }
 
 .infoCard {
-    @include card();
-    margin-top: 14px;
-    padding: 12px 14px;
-    color: $muted;
-    display: grid;
-    gap: 6px;
+    padding: 12px;
+    border: 1px solid $border;
+    border-radius: 14px;
+    background: #fff;
+    margin-top: 8px;
 }
 
+/* ------- Benefits ------- */
 .benefits {
-    margin-top: 24px;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    gap: 10px;
+    margin: 16px 0;
 
-    @media (max-width: $bp-md) {
+    @media (max-width: 600px) {
         grid-template-columns: 1fr;
-    }
-
-    .benefit {
-        @include card();
-        padding: 14px;
-        display: grid;
-        grid-template-columns: 48px 1fr;
-        gap: 10px;
-        align-items: center;
-
-        .icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            background: #FFF7ED;
-            /* warm tint */
-            display: grid;
-            place-items: center;
-            font-size: 22px;
-        }
-
-        .bTitle {
-            font-weight: 700;
-            color: $text;
-        }
-
-        .bDesc {
-            color: $muted;
-            font-size: 13px;
-        }
     }
 }
 
-/* Details sections (like How to use / Warranty / Good to know) */
-.details {
-    margin-top: 20px;
-    display: grid;
+.benefit {
+    @include card();
+    padding: 10px 12px;
+    border-radius: 14px;
+    display: flex;
     gap: 10px;
+    align-items: center;
+    background: #fff;
+
+    .icon {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: #FFF7ED;
+        font-size: 18px;
+    }
+
+    .bTitle {
+        font-weight: 800;
+    }
+
+    .bDesc {
+        color: $muted;
+        font-size: 12px;
+    }
+}
+
+/* ------- Details ------- */
+.details {
+    margin: 6px 0 0;
 
     details {
         @include card();
-        padding: 14px;
         background: #fff;
+        margin: 8px 0;
+        padding: 10px 12px;
+        border-radius: 14px;
 
         summary {
             cursor: pointer;
             font-weight: 700;
-            color: $text;
-            outline: none;
             list-style: none;
 
             &::-webkit-details-marker {
@@ -191,27 +184,19 @@
 
         p,
         ul {
-            color: $muted;
-            margin: 10px 0 0;
-            font-size: 14px;
-        }
-
-        ul {
-            padding-inline-start: 18px;
+            margin: 8px 0 0;
+            color: #334155;
         }
     }
 }
 
+/* ------- Recommended header ------- */
 .recoHeader {
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-top: 28px;
 
     h2 {
         font-size: 1.25rem;
         font-weight: 800;
-        margin: 0;
-        color: $text;
+        margin: 0 0 8px;
     }
 }

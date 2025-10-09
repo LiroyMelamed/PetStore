@@ -15,7 +15,7 @@ const iconFor = (name = "") => {
     return "📦";
 };
 
-export default function CategorySlider({ title, categories = [], onCategoryClick }) {
+export default function CategorySlider({ title, categories = [], onCategoryClick, includeAll, onAllClick }) {
     const { t } = useTranslation();
     if (!categories?.length) return null;
 
@@ -36,10 +36,20 @@ export default function CategorySlider({ title, categories = [], onCategoryClick
             </div>
 
             <Slider {...settings} className={styles.categoriesSlider}>
+                {includeAll && (
+                    <div className={styles.catSlide}>
+                        <div className={styles.categoryCube} onClick={() => onAllClick?.()}>
+                            <div className={styles.categoryIcon}>🌐</div>
+                            <div className={styles.categoryName}>{t("common.all_option", "All")}</div>
+                        </div>
+                    </div>
+                )}
                 {categories.map(c => (
-                    <div key={c.id} className={styles.categoryCube} onClick={() => onCategoryClick?.(c)}>
-                        <div className={styles.categoryIcon}>{iconFor(c.name)}</div>
-                        <div className={styles.categoryName} title={c.name}>{c.name}</div>
+                    <div key={c.id} className={styles.catSlide}>
+                        <div className={styles.categoryCube} onClick={() => onCategoryClick?.(c)}>
+                            <div className={styles.categoryIcon}>{iconFor(c.name)}</div>
+                            <div className={styles.categoryName} title={c.name}>{c.name}</div>
+                        </div>
                     </div>
                 ))}
             </Slider>

@@ -1,8 +1,9 @@
 // frontend/src/components/ProductsGrid.jsx
 import * as React from "react";
-import Grid from "@mui/material/Grid";           // ✅ במקום Grid2
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 import ProductCard from "./ProductCard";
 
 export default function ProductsGrid({ title, products = [], onItemClick }) {
@@ -16,10 +17,21 @@ export default function ProductsGrid({ title, products = [], onItemClick }) {
                 </Typography>
             )}
 
-            <Grid container spacing={2}>
+            {/* stretch rows so all items get equal height */}
+            <Grid container spacing={2} alignItems="stretch" justifyContent={"center"}>
                 {products.map((p) => (
-                    <Grid key={p.id} item xs={12} sm={6} md={4} lg={3}>
-                        <ProductCard product={p} onClick={() => onItemClick?.(p)} />
+                    <Grid
+                        key={p.id}
+                        item
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        lg={3}
+                        sx={{ display: "flex" }}   // let child fill the cell
+                    >
+                        <Box sx={{ width: "100%" }}>
+                            <ProductCard product={p} onClick={() => onItemClick?.(p)} />
+                        </Box>
                     </Grid>
                 ))}
             </Grid>

@@ -244,5 +244,20 @@
         "privacy": "מדיניות פרטיות",
         "shipping": "משלוח והחזרות",
         "rights": "כל הזכויות שמורות."
+    },
+    "catalog": {
+        "title": "קטלוג",
+        "sort_by": "מיון לפי",
+        "sort": {
+            "relevance": "רלוונטיות",
+            "price_low_high": "מחיר: מהנמוך לגבוה",
+            "price_high_low": "מחיר: מהגבוה לנמוך",
+            "name": "שם (א-ת)",
+            "newest": "חדש ביותר"
+        },
+        "search": "חיפוש",
+        "in_stock_only": "מוצרים במלאי בלבד",
+        "reset_filters": "נקה סינונים",
+        "found_count": "נמצאו {{count}} מוצרים"
     }
 }

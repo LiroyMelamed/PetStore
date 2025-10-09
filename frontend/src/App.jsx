@@ -42,6 +42,7 @@ export default function App() {
       {/* Public shop */}
       <Route path="/" element={<ShopLayout><HomePage /></ShopLayout>} />
       <Route path="/catalog" element={<ShopLayout><Catalog /></ShopLayout>} />
+      <Route path="/catalog/:catSlug" element={<ShopLayout><Catalog /></ShopLayout>} />
       <Route path="/product/:id" element={<ShopLayout><ProductDetail /></ShopLayout>} />
       <Route path="/cart" element={<ShopLayout><Cart /></ShopLayout>} />
       <Route path="/checkout" element={<ShopLayout><Checkout /></ShopLayout>} />

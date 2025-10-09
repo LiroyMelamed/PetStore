@@ -244,5 +244,20 @@
         "privacy": "Privacy Policy",
         "shipping": "Shipping & Returns",
         "rights": "All rights reserved."
+    },
+    "catalog": {
+        "title": "Catalog",
+        "sort_by": "Sort by",
+        "sort": {
+            "relevance": "Relevance",
+            "price_low_high": "Price: Low → High",
+            "price_high_low": "Price: High → Low",
+            "name": "Name (A–Z)",
+            "newest": "Newest"
+        },
+        "search": "Search",
+        "in_stock_only": "In stock only",
+        "reset_filters": "Reset filters",
+        "found_count": "Found {{count}} products"
     }
 }

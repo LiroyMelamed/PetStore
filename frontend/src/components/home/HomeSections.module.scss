@@ -117,9 +117,22 @@
 
 /* CATEGORIES slider */
 .categoriesSlider {
+    padding: 2rem;
+
     .slick-slide {
-        padding: 6px;
+        padding: 16px;
     }
+
+    :global(.slick-list) {
+        overflow: visible;
+        padding: 0 8px;
+        /* small side padding so shadows aren’t cut on edges */
+    }
+}
+
+.catSlide {
+    padding: 0px 10px;
+    /* ← this is your gap between the cubes */
 }
 
 .categoryCube {
