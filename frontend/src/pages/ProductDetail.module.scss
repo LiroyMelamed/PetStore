@@ -2,15 +2,15 @@
 @use "../styles/mixins" as *;
 
 .page {
-    padding-top: 8px;
+    padding-top: $spacing-xs;
 }
 
 /* ------- Breadcrumb ------- */
 .breadcrumb {
     display: flex;
-    gap: 6px;
+    gap: $spacing-xs;
     align-items: center;
-    margin: 8px 0 16px;
+    margin: $spacing-xs 0 $spacing-md;
 
     a {
         color: $brand;
@@ -64,23 +64,23 @@
 /* ------- Title/Price ------- */
 .title {
     font-weight: 900;
-    margin: 0 0 6px;
+    margin: 0 0 $spacing-xs;
 }
 
 .priceRow {
     display: flex;
-    gap: 10px;
+    gap: $spacing-sm;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: $spacing-sm;
 }
 
 .price {
-    font-size: 1.8rem;
+    font-size: $font-xl;
     font-weight: 900;
     color: $brand;
 
     .currency {
-        margin-inline-end: 4px;
+        margin-inline-end: $spacing-xs;
         color: $muted;
         font-weight: 700;
     }
@@ -98,7 +98,7 @@
 
 /* ------- Qty / Actions ------- */
 .qtyRow {
-    margin: 10px 0;
+    margin: $spacing-sm 0;
 }
 
 .qtyInput {
@@ -107,25 +107,27 @@
 
 .actionsRow {
     display: flex;
-    gap: 10px;
+    gap: $spacing-sm;
     align-items: center;
-    margin: 10px 0 14px;
+    margin: $spacing-sm 0 $spacing-md;
 }
 
 .infoCard {
-    padding: 12px;
+    padding: $spacing-md;
     border: 1px solid $border;
-    border-radius: 14px;
+    border-radius: $radius;
     background: #fff;
-    margin-top: 8px;
+    margin-top: $spacing-xs;
 }
 
 /* ------- Benefits ------- */
 .benefits {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    margin: 16px 0;
+    gap: $spacing-sm;
+    margin: $spacing-md 0;
+    box-sizing: border-box;
+    width: 100%;
 
     @media (max-width: 600px) {
         grid-template-columns: 1fr;
@@ -134,10 +136,10 @@
 
 .benefit {
     @include card();
-    padding: 10px 12px;
-    border-radius: 14px;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius;
     display: flex;
-    gap: 10px;
+    gap: $spacing-sm;
     align-items: center;
     background: #fff;
 
@@ -146,9 +148,9 @@
         height: 36px;
         display: grid;
         place-items: center;
-        border-radius: 10px;
+        border-radius: $radius;
         background: #FFF7ED;
-        font-size: 18px;
+        font-size: $font-sm;
     }
 
     .bTitle {
@@ -157,20 +159,20 @@
 
     .bDesc {
         color: $muted;
-        font-size: 12px;
+        font-size: $font-xs;
     }
 }
 
 /* ------- Details ------- */
 .details {
-    margin: 6px 0 0;
+    margin: $spacing-xs 0 0;
 
     details {
         @include card();
         background: #fff;
-        margin: 8px 0;
-        padding: 10px 12px;
-        border-radius: 14px;
+        margin: $spacing-xs 0;
+        padding: $spacing-sm $spacing-md;
+        border-radius: $radius;
 
         summary {
             cursor: pointer;
@@ -184,7 +186,7 @@
 
         p,
         ul {
-            margin: 8px 0 0;
+            margin: $spacing-xs 0 0;
             color: #334155;
         }
     }
@@ -192,11 +194,11 @@
 
 /* ------- Recommended header ------- */
 .recoHeader {
-    margin-top: 28px;
+    margin-top: $spacing-2xl;
 
     h2 {
-        font-size: 1.25rem;
+        font-size: $font-lg;
         font-weight: 800;
-        margin: 0 0 8px;
+        margin: 0 0 $spacing-xs;
     }
 }

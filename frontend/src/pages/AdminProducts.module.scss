@@ -3,14 +3,16 @@
 
 .grid {
     display: grid;
-    gap: $space;
+    gap: $spacing-md;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .toolbar {
     @include card();
-    padding: 14px;
+    padding: $spacing-md;
     display: flex;
-    gap: 12px;
+    gap: $spacing-md;
     align-items: center;
     justify-content: space-between;
     background: $panel;
@@ -18,8 +20,10 @@
 
 .formGrid {
     display: grid;
-    gap: $space;
+    gap: $spacing-md;
     grid-template-columns: repeat(2, 1fr);
+    box-sizing: border-box;
+    width: 100%;
 
     @media (max-width: $bp-md) {
         grid-template-columns: 1fr;
@@ -28,11 +32,11 @@
 
 .tableCard {
     @include card();
-    padding: 14px;
+    padding: $spacing-md;
     background: $panel;
 }
 
 .actions {
     display: flex;
-    gap: 8px;
+    gap: $spacing-xs;
 }

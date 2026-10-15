@@ -3,30 +3,30 @@
 
 .grid {
     display: grid;
-    gap: $space;
+    gap: $spacing-md;
 }
 
 .toolbar {
     @include card();
-    padding: 12px;
+    padding: $spacing-md;
     display: flex;
-    gap: 10px;
+    gap: $spacing-sm;
     align-items: center;
     justify-content: space-between;
 }
 
 .formGrid {
     display: grid;
-    gap: $space;
+    gap: $spacing-md;
     grid-template-columns: repeat(2, 1fr);
 }
 
 .tableCard {
     @include card();
-    padding: 12px;
+    padding: $spacing-md;
 }
 
 .actions {
     display: flex;
-    gap: 8px;
+    gap: $spacing-xs;
 }

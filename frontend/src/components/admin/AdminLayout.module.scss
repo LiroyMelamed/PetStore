@@ -8,7 +8,7 @@
 
 .sidebar {
     @include card();
-    padding: 18px;
+    padding: $spacing-lg;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -16,19 +16,19 @@
 
 .brand {
     margin: 0;
-    font-size: 18px;
+    font-size: $font-lg;
 }
 
 .sub {
     color: $muted;
-    font-size: 12px;
-    margin-top: 6px;
+    font-size: $font-xs;
+    margin-top: $spacing-xs;
 }
 
 .nav {
     display: grid;
-    gap: 10px;
-    margin-top: 16px;
+    gap: $spacing-sm;
+    margin-top: $spacing-md;
 
     a {
         color: $text;
@@ -41,5 +41,5 @@
 }
 
 .main {
-    padding: 18px;
+    padding: $spacing-lg;
 }

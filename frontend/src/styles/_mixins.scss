@@ -1,29 +1,172 @@
 @use "./variables" as *;
 
+// ===== RESPONSIVE DESIGN MIXINS =====
+
+// Mobile-first media queries
+@mixin respond-to($breakpoint) {
+    @if $breakpoint =="sm" {
+        @media (min-width: $bp-sm) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint =="md" {
+        @media (min-width: $bp-md) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint =="lg" {
+        @media (min-width: $bp-lg) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint =="xl" {
+        @media (min-width: $bp-xl) {
+            @content;
+        }
+    }
+
+    @else if $breakpoint =="2xl" {
+        @media (min-width: $bp-2xl) {
+            @content;
+        }
+    }
+}
+
+// Responsive padding for containers
+@mixin container-padding {
+    padding-left: $container-px-xs;
+    padding-right: $container-px-xs;
+
+    @include respond-to("sm") {
+        padding-left: $container-px-sm;
+        padding-right: $container-px-sm;
+    }
+
+    @include respond-to("md") {
+        padding-left: $container-px-md;
+        padding-right: $container-px-md;
+    }
+
+    @include respond-to("lg") {
+        padding-left: $container-px-lg;
+        padding-right: $container-px-lg;
+    }
+}
+
+// Responsive font sizes using clamp
+@mixin responsive-font($min-size, $preferred, $max-size) {
+    font-size: clamp($min-size, $preferred, $max-size);
+}
+
+// Responsive spacing (margin/padding)
+@mixin responsive-space($property, $min, $mid, $max) {
+    #{$property}: clamp($min, $mid, $max);
+}
+
+// ===== COMPONENT MIXINS =====
+
 @mixin card {
     background: $panel;
-    border: 1px solid $border;
+    border: 1rem solid $border;
     border-radius: $radius;
     box-shadow: $shadow;
 }
 
 @mixin button($variant: "default") {
-    padding: 10px 14px;
-    border-radius: 10px;
+    padding: $spacing-sm $spacing-md;
+    border-radius: 0.625rem;
     cursor: pointer;
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     color: $text;
     background: #F3F4F6;
+    font-size: $font-base;
+    transition: all 0.2s ease;
 
     @if $variant =="primary" {
         border: none;
         color: #1F2937;
         background: linear-gradient(180deg, $brand 0%, $brand-2 100%);
+
+        &:hover {
+            transform: translateY(-0.125rem);
+            box-shadow: 0 0.375rem 0.75rem rgba(255, 176, 32, 0.2);
+        }
     }
 
     @if $variant =="danger" {
-        border-color: rgba($danger, .25);
+        border-color: rgba($danger, 0.25);
         background: #FEE2E2;
         color: #7F1D1D;
+
+        &:hover {
+            background: #FDCCC9;
+        }
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+}
+
+// ===== RTL/LTR SUPPORT MIXINS =====
+
+// Logical properties mixin for directional support
+@mixin logical-margin($top, $right, $bottom, $left) {
+    margin-top: $top;
+    margin-bottom: $bottom;
+
+    [dir="ltr"] & {
+        margin-left: $left;
+        margin-right: $right;
+    }
+
+    [dir="rtl"] & {
+        margin-left: $right;
+        margin-right: $left;
+    }
+}
+
+@mixin logical-padding($top, $right, $bottom, $left) {
+    padding-top: $top;
+    padding-bottom: $bottom;
+
+    [dir="ltr"] & {
+        padding-left: $left;
+        padding-right: $right;
+    }
+
+    [dir="rtl"] & {
+        padding-left: $right;
+        padding-right: $left;
+    }
+}
+
+// Bidirectional flexbox
+@mixin flex-direction-aware($ltr-direction: row, $rtl-direction: row-reverse) {
+    [dir="ltr"] & {
+        flex-direction: $ltr-direction;
+    }
+
+    [dir="rtl"] & {
+        flex-direction: $rtl-direction;
+    }
+}
+
+// Text alignment aware
+@mixin text-align-aware($ltr-align: left, $rtl-align: right) {
+    [dir="ltr"] & {
+        text-align: $ltr-align;
+    }
+
+    [dir="rtl"] & {
+        text-align: $rtl-align;
     }
 }

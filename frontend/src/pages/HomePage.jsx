@@ -1,18 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { fetchBanners, fetchFeaturedProducts, fetchProducts, fetchCategories } from "../api";
 import { useTranslation } from "react-i18next";
+import useSEO, { generateOrganizationSchema } from "../hooks/useSEO";
+import { SEOSection, SEOMeta } from "../components/SEO";
 import HeroBanner from "../components/home/HeroBanner";
 import ProductSlider from "../components/home/ProductSlider";
 import CategorySlider from "../components/home/CategorySlider";
 import BrandSlider from "../components/home/BrandSlider";
 import HomeFooter from "../components/home/HomeFooter";
+import "../styles/HomePage.scss";
 
 export default function HomePage() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [banners, setBanners] = useState([]);
     const [featured, setFeatured] = useState([]);
     const [newProducts, setNewProducts] = useState([]);
     const [categories, setCategories] = useState([]);
+
+    // SEO hook for homepage
+    useSEO({
+        title: "Home",
+        description: t("seo.home_description", "Welcome to PetStore - Your trusted online pet store for quality pet products, food, toys, and supplies for dogs, cats, and other pets."),
+        keywords: t("seo.home_keywords", "pet store, pet products, dog food, cat food, pet toys, pet supplies, online pet shop"),
+        canonical: window.location.origin,
+        ogTitle: "PetStore - Quality Pet Products & Supplies",
+        ogDescription: t("seo.home_description", "Welcome to PetStore - Your trusted online pet store for quality pet products, food, toys, and supplies for dogs, cats, and other pets."),
+        ogImage: `${window.location.origin}/og-image-home.png`,
+        ogType: "website",
+        structuredData: generateOrganizationSchema()
+    });
 
     useEffect(() => {
         let ignore = false;
@@ -50,42 +66,58 @@ export default function HomePage() {
     const moreNew = newProducts.slice(0, 12);
 
     return (
-        <div className="home">
-            {/* 1) Banner */}
-            <HeroBanner banners={banners} />
+        <main className="home" role="main">
+            {/* 1) Banner - Hero Section */}
+            <header className="hero">
+                <HeroBanner banners={banners} />
+            </header>
 
-            {/* 2) Featured */}
-            <ProductSlider
-                title={t("home.featured_title", "Featured Products")}
-                products={featured}
-                onItemClick={goToProduct}
-            />
+            {/* 2) Featured Products */}
+            <section className="featured-section" aria-labelledby="featured-title">
+                <h2 id="featured-title">{t("home.featured_title", "Featured Products")}</h2>
+                <ProductSlider
+                    products={featured}
+                    onItemClick={goToProduct}
+                />
+            </section>
 
             {/* 3) Categories slider (icons + cubes) */}
-            <CategorySlider
-                title={t("home.categories_title", "Shop by Category")}
-                categories={categories}
-                onCategoryClick={goToCategory}
-            />
+            <section className="categories-section" aria-labelledby="categories-title">
+                <h2 id="categories-title">{t("home.categories_title", "Shop by Category")}</h2>
+                <CategorySlider
+                    categories={categories}
+                    onCategoryClick={goToCategory}
+                />
+            </section>
 
-            {/* 4) More sliders: New arrivals, Recommended, Top brands */}
-            <ProductSlider
-                title={t("home.new_arrivals", "New Arrivals")}
-                products={moreNew}
-                onItemClick={goToProduct}
-            />
-            <ProductSlider
-                title={t("home.recommended_title", "Recommended for You")}
-                products={recommended}
-                onItemClick={goToProduct}
-            />
-            <BrandSlider
-                title={t("home.top_brands", "Top Brands")}
-                brands={brands}
-            />
+            {/* 4) New Arrivals */}
+            <section className="new-arrivals-section" aria-labelledby="new-arrivals-title">
+                <h2 id="new-arrivals-title">{t("home.new_arrivals", "New Arrivals")}</h2>
+                <ProductSlider
+                    products={moreNew}
+                    onItemClick={goToProduct}
+                />
+            </section>
+
+            {/* 5) Recommended Products */}
+            <section className="recommended-section" aria-labelledby="recommended-title">
+                <h2 id="recommended-title">{t("home.recommended_title", "Recommended for You")}</h2>
+                <ProductSlider
+                    products={recommended}
+                    onItemClick={goToProduct}
+                />
+            </section>
+
+            {/* 6) Top Brands */}
+            <section className="brands-section" aria-labelledby="brands-title">
+                <h2 id="brands-title">{t("home.top_brands", "Top Brands")}</h2>
+                <BrandSlider brands={brands} />
+            </section>
 
             {/* Footer */}
-            <HomeFooter />
-        </div>
+            <footer>
+                <HomeFooter />
+            </footer>
+        </main>
     );
 }

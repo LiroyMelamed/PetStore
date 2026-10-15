@@ -1,8 +1,23 @@
 @use "./variables" as *;
 @use "./mixins" as *;
 
+// ===== ROOT & DOCUMENT SETUP =====
 * {
     box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+
+    &[dir="rtl"] {
+        direction: rtl;
+        text-align: right;
+    }
+
+    &[dir="ltr"] {
+        direction: ltr;
+        text-align: left;
+    }
 }
 
 html,
@@ -14,14 +29,24 @@ body,
 body {
     background: $bg;
     color: $text;
-    font-family: Inter, system-ui, sans-serif;
+    font-family: 'Rubik', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: $font-base;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
 }
 
 a {
     color: $brand;
     text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: $brand-2;
+    }
 }
 
+// ===== BUTTONS =====
 .btn {
     @include button();
 }
@@ -34,71 +59,214 @@ a {
     @include button("danger");
 }
 
+// ===== CARDS & PANELS =====
 .card {
     @include card();
 }
 
 .panel {
-    padding: 18px;
+    padding: $spacing-lg;
     border-radius: $radius;
+
+    @include respond-to("md") {
+        padding: $spacing-xl;
+    }
 }
 
+// ===== BADGES =====
 .badge {
-    padding: 4px 8px;
+    display: inline-block;
+    padding: $spacing-xs $spacing-sm;
     border-radius: 999px;
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     color: $muted;
-    font-size: 12px;
+    font-size: $font-xs;
+    font-weight: 500;
 }
 
+// ===== FORM ELEMENTS =====
 .input,
-select {
+select,
+textarea {
     background: #0f1622;
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     color: $text;
-    padding: 10px 12px;
-    border-radius: 10px;
+    padding: $spacing-sm $spacing-md;
+    border-radius: 0.625rem;
     outline: none;
     width: 100%;
+    font-family: inherit;
+    font-size: $font-base;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+        border-color: $brand;
+        box-shadow: 0 0 0 0.1875rem rgba(255, 176, 32, 0.1);
+    }
+
+    &:disabled {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
 }
 
+// ===== TABLES =====
 .table {
     width: 100%;
     border-collapse: collapse;
+    overflow-x: auto;
 
     th,
     td {
-        padding: 12px;
-        border-bottom: 1px solid $border;
+        padding: $spacing-md;
+        border-bottom: 0.0625rem solid $border;
+        text-align: inherit;
     }
 
     th {
         color: $muted;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
-        font-size: 12px;
+        font-size: $font-xs;
+        background: #FAFBFC;
+
+        @include text-align-aware(left, right);
+    }
+
+    tr:hover {
+        background-color: #fafbfc;
     }
 }
 
+// ===== GRID LAYOUTS =====
 .grid {
     display: grid;
-    gap: $space;
+    gap: $spacing-md;
+    box-sizing: border-box;
+    width: 100%;
+
+    @include respond-to("md") {
+        gap: $spacing-lg;
+    }
 }
 
 .grid--4 {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 1fr;
+
+    @include respond-to("sm") {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to("lg") {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
+.grid--3 {
+    grid-template-columns: 1fr;
+
+    @include respond-to("sm") {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to("lg") {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.grid--2 {
+    grid-template-columns: 1fr;
+
+    @include respond-to("md") {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+// ===== FLEX LAYOUTS =====
 .row {
     display: flex;
-    gap: $space;
+    gap: $spacing-md;
     align-items: center;
+
+    @include flex-direction-aware(row, row-reverse);
+
+    @include respond-to("md") {
+        gap: $spacing-lg;
+    }
+
+    &--start {
+        align-items: flex-start;
+    }
+
+    &--end {
+        align-items: flex-end;
+    }
+
+    &--center {
+        align-items: center;
+    }
+
+    &--between {
+        justify-content: space-between;
+    }
+
+    &--around {
+        justify-content: space-around;
+    }
 }
 
+// ===== SIDEBAR LAYOUT =====
 .sidebar {
-    width: 260px;
+    width: 100%;
+    max-width: 16.25rem; // 260px
     position: sticky;
     top: 0;
     height: 100vh;
-    padding: 18px;
+    padding: $spacing-lg;
+    overflow-y: auto;
+
+    @include respond-to("md") {
+        padding: $spacing-xl;
+    }
+
+    @media (max-width: $bp-md - 0.0625rem) {
+        position: relative;
+        height: auto;
+        max-width: 100%;
+    }
+}
+
+// ===== MAIN CONTENT WRAPPER =====
+.main-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    gap: $spacing-lg;
+
+    @include flex-direction-aware(row, row-reverse);
+
+    @media (max-width: $bp-md - 0.0625rem) {
+        flex-direction: column;
+        gap: $spacing-md;
+    }
+}
+
+// ===== RESPONSIVE UTILITIES =====
+.container {
+    @include container-padding();
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hidden-mobile {
+    @media (max-width: $bp-sm - 0.0625rem) {
+        display: none !important;
+    }
+}
+
+.hidden-desktop {
+    @include respond-to("md") {
+        display: none !important;
+    }
 }

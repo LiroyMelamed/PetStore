@@ -5,82 +5,297 @@
     background: #FFFFFF !important;
     border-bottom: 1px solid $border;
     color: $text;
-    box-shadow: $shadow;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+    width: 100% !important;
+    overflow: hidden !important;
 }
 
 .toolbar {
     display: flex;
-    gap: clamp(8px, 2vw, 16px);
-    min-height: 72px;
+    gap: $spacing-xs;
+    min-height: 56px;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 $spacing-xs !important;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden !important;
+
+    @include respond-to($bp-sm) {
+        min-height: 64px;
+        padding: 0 $spacing-md !important;
+        gap: $spacing-sm;
+    }
+
+    @include respond-to($bp-md) {
+        min-height: 72px;
+        padding: 0 $spacing-lg !important;
+        gap: $spacing-md;
+    }
+
+    @include respond-to($bp-lg) {
+        padding: 0 $spacing-xl !important;
+    }
 }
 
+/* Mobile Menu Button */
+.mobileMenuBtn {
+    display: flex !important;
+    flex-shrink: 0 !important;
+    padding: 6px !important;
+    font-size: 1.5rem;
+
+    @include respond-to($bp-md) {
+        display: none !important;
+    }
+
+    svg {
+        width: 24px;
+        height: 24px;
+    }
+}
+
+/* Brand Logo */
 .brand {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 800;
+    gap: 0.25rem;
+    font-weight: 900;
     text-decoration: none;
     color: $text;
+    white-space: nowrap;
+    font-size: $font-base;
+    flex-shrink: 0;
+    padding: 0.25rem 0.5rem;
+    border-radius: $radius;
+    transition: all 0.2s ease;
 
     &:hover {
         color: $brand;
+        background: rgba($brand, 0.05);
+    }
+
+    @include respond-to($bp-sm) {
+        font-size: $font-lg;
+    }
+}
+
+.brandText {
+    display: none;
+
+    @include respond-to($bp-sm) {
+        display: inline;
+    }
+}
+
+/* Desktop Nav (hidden on mobile) */
+.desktopNav {
+    display: none;
+    gap: $spacing-sm;
+    align-items: center;
+
+    @include respond-to($bp-md) {
+        display: flex;
     }
 }
 
 .link {
     color: $text !important;
-    opacity: .9;
     font-weight: 600;
+    font-size: $font-sm;
+    padding: $spacing-xs $spacing-md !important;
     text-transform: none;
+    white-space: nowrap;
+    transition: all 0.2s ease;
 
     &:hover {
         color: $brand !important;
-        background: transparent;
+        background: rgba($brand, 0.05);
     }
 }
 
-.iconBtn {
+/* Cart Button */
+.cartBtn {
     color: $text !important;
+    padding: $spacing-xs !important;
+    flex-shrink: 0;
+    display: flex;
+    transition: all 0.2s ease;
 
     &:hover {
         color: $brand !important;
-        background: rgba(0, 0, 0, 0.03);
+        background: rgba($brand, 0.05);
     }
 }
 
-.badge :global(.MuiBadge-badge) {
-    background: $brand;
-    color: #1F2937;
-    font-weight: 700;
+.cartIcon {
+    font-size: $font-xl;
+    line-height: 1;
+}
+
+.badge {
+    :global(.MuiBadge-badge) {
+        background: $brand !important;
+        color: white !important;
+        font-weight: 700;
+        font-size: 0.65rem !important;
+        min-width: 18px;
+    }
+}
+
+/* Spacer */
+.spacer {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+/* Desktop Language Button */
+.langBtn {
+    display: none;
+    flex-shrink: 0;
+    padding: $spacing-xs !important;
+    color: $muted !important;
+    transition: all 0.2s ease;
+
+    @include respond-to($bp-sm) {
+        display: inline-flex;
+    }
+
+    &:hover {
+        color: $brand !important;
+    }
+}
+
+/* Desktop Auth Buttons */
+.desktopAuth {
+    display: none;
+    gap: $spacing-sm;
+    align-items: center;
+    flex-shrink: 0;
+
+    @include respond-to($bp-sm) {
+        display: flex;
+    }
 }
 
 .authOutlined {
-    @include button();
-    background: #FFF;
-    border-color: rgba($brand, .45);
-    color: $text;
+    background: #FFF !important;
+    color: $text !important;
+    border: 1px solid $border !important;
+    font-size: $font-xs !important;
+    font-weight: 600;
+    padding: 6px 12px !important;
+    white-space: nowrap;
+    text-transform: none;
+    transition: all 0.2s ease;
+
+    @include respond-to($bp-sm) {
+        font-size: $font-sm !important;
+        padding: 8px 16px !important;
+    }
 
     &:hover {
-        border-color: $brand;
-        color: $brand;
-        background: #FFF7ED; // warm tiny tint
+        border-color: $brand !important;
+        color: $brand !important;
+        background: rgba($brand, 0.05) !important;
     }
 }
 
 .authPrimary {
-    @include button("primary");
-}
-
-.langBtn {
-    color: $muted !important;
+    background: $brand !important;
+    color: white !important;
+    font-size: $font-xs !important;
+    font-weight: 600;
+    padding: 6px 12px !important;
+    white-space: nowrap;
     text-transform: none;
+    transition: all 0.2s ease;
+    border: none !important;
+
+    @include respond-to($bp-sm) {
+        font-size: $font-sm !important;
+        padding: 8px 16px !important;
+    }
 
     &:hover {
-        color: $brand !important;
-        background: transparent;
+        background: darken($brand, 10%) !important;
+        box-shadow: 0 4px 12px rgba($brand, 0.3);
     }
 }
 
-.spacer {
-    flex: 1 1 auto;
+/* DRAWER STYLES */
+.drawerPaper {
+    width: clamp(250px, 80vw, 320px) !important;
+    background: #FFFFFF !important;
+    border: none;
+}
+
+.drawerHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing-md;
+    gap: $spacing-sm;
+}
+
+.drawerClose {
+    padding: 6px !important;
+    flex-shrink: 0;
+}
+
+.drawerMenu {
+    padding: 0;
+
+    li {
+        button {
+            padding: $spacing-md $spacing-lg !important;
+            font-weight: 500;
+            color: $text;
+            border-radius: 0;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: rgba($brand, 0.08);
+                color: $brand;
+            }
+        }
+    }
+}
+
+.drawerMenuItem {
+    padding: $spacing-md !important;
+}
+
+.drawerAuth {
+    padding: 0;
+
+    li {
+        button {
+            padding: $spacing-md $spacing-lg !important;
+            font-weight: 500;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background: rgba($brand, 0.08);
+                color: $brand;
+            }
+        }
+    }
+}
+
+.drawerAuthItem {
+    color: $text;
+}
+
+.drawerLogout {
+    color: #EF4444 !important;
+
+    &:hover {
+        background: rgba(#EF4444, 0.08) !important;
+    }
+}
+
+.drawerLanguage {
+    padding: $spacing-md;
 }

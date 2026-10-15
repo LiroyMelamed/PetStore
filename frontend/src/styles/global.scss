@@ -1,8 +1,23 @@
 @use "./variables" as *;
 @use "./mixins" as *;
 
+// ===== ROOT & DOCUMENT SETUP =====
 * {
     box-sizing: border-box;
+}
+
+html {
+    font-size: 16px; // Base font size for REM calculations
+
+    &[dir="rtl"] {
+        direction: rtl;
+        text-align: right;
+    }
+
+    &[dir="ltr"] {
+        direction: ltr;
+        text-align: left;
+    }
 }
 
 html,
@@ -14,14 +29,70 @@ body,
 body {
     background: $bg;
     color: $text;
-    font-family: Inter, system-ui, sans-serif;
+    font-family: 'Rubik', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: $font-base;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+// ===== TYPOGRAPHY =====
 a {
     color: $brand;
     text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: $brand-2;
+    }
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: $font-4xl;
+}
+
+h2 {
+    font-size: $font-3xl;
+}
+
+h3 {
+    font-size: $font-2xl;
+}
+
+h4 {
+    font-size: $font-xl;
+}
+
+h5 {
+    font-size: $font-lg;
+}
+
+h6 {
+    font-size: $font-base;
+}
+
+p {
+    margin: 0;
+
+    &+p {
+        margin-top: $spacing-md;
+    }
+}
+
+// ===== BUTTONS =====
 .btn {
     @include button();
 }
@@ -34,52 +105,180 @@ a {
     @include button("danger");
 }
 
+// ===== CARDS & PANELS =====
 .card {
     @include card();
 }
 
 .panel {
-    padding: 18px;
+    padding: $spacing-lg;
     border-radius: $radius;
     background: $panel;
+
+    @include respond-to("md") {
+        padding: $spacing-xl;
+    }
 }
 
+// ===== BADGES =====
 .badge {
-    padding: 4px 8px;
+    display: inline-block;
+    padding: $spacing-xs $spacing-sm;
     border-radius: 999px;
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     color: $muted;
-    font-size: 12px;
+    font-size: $font-xs;
     background: #fff;
+    font-weight: 500;
 }
 
+// ===== FORM ELEMENTS =====
 .input,
-select {
+select,
+textarea {
     background: #fff;
-    border: 1px solid $border;
+    border: 0.0625rem solid $border;
     color: $text;
-    padding: 10px 12px;
-    border-radius: 10px;
+    padding: $spacing-sm $spacing-md;
+    border-radius: 0.625rem;
     outline: none;
     width: 100%;
+    font-family: inherit;
+    font-size: $font-base;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+        border-color: $brand;
+        box-shadow: 0 0 0 0.1875rem rgba(255, 176, 32, 0.1);
+    }
+
+    &:disabled {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
 }
 
+input::placeholder,
+textarea::placeholder {
+    color: $muted;
+}
+
+// ===== TABLES =====
 .table {
     width: 100%;
     border-collapse: collapse;
+    overflow-x: auto;
 
     th,
     td {
-        padding: 12px;
-        border-bottom: 1px solid $border;
+        padding: $spacing-md;
+        border-bottom: 0.0625rem solid $border;
         background: #fff;
     }
 
     th {
         color: $muted;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
-        font-size: 12px;
+        font-size: $font-xs;
         background: #FAFBFC;
+
+        @include text-align-aware(left, right);
     }
+
+    tr:hover {
+        background-color: #fafbfc;
+    }
+}
+
+// ===== UTILITY CLASSES =====
+.container {
+    @include container-padding();
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: $muted;
+}
+
+.text-danger {
+    color: $danger;
+}
+
+.mt-0 {
+    margin-top: 0;
+}
+
+.mt-1 {
+    margin-top: $spacing-xs;
+}
+
+.mt-2 {
+    margin-top: $spacing-sm;
+}
+
+.mt-3 {
+    margin-top: $spacing-md;
+}
+
+.mt-4 {
+    margin-top: $spacing-lg;
+}
+
+.mt-5 {
+    margin-top: $spacing-xl;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.mb-1 {
+    margin-bottom: $spacing-xs;
+}
+
+.mb-2 {
+    margin-bottom: $spacing-sm;
+}
+
+.mb-3 {
+    margin-bottom: $spacing-md;
+}
+
+.mb-4 {
+    margin-bottom: $spacing-lg;
+}
+
+.mb-5 {
+    margin-bottom: $spacing-xl;
+}
+
+.p-0 {
+    padding: 0;
+}
+
+.p-1 {
+    padding: $spacing-xs;
+}
+
+.p-2 {
+    padding: $spacing-sm;
+}
+
+.p-3 {
+    padding: $spacing-md;
+}
+
+.p-4 {
+    padding: $spacing-lg;
+}
+
+.p-5 {
+    padding: $spacing-xl;
 }

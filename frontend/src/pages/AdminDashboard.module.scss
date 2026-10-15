@@ -3,13 +3,17 @@
 
 .wrapper {
     display: grid;
-    gap: 16px;
+    gap: $spacing-md;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .kpis {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 12px;
+    gap: $spacing-md;
+    box-sizing: border-box;
+    width: 100%;
 
     @media (max-width: 1200px) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -22,13 +26,13 @@
 
 .card {
     @include card();
-    padding: 16px;
+    padding: $spacing-md;
 }
 
 .cardTitle {
-    font-size: 12px;
+    font-size: $font-xs;
     color: $muted;
-    margin-bottom: 6px;
+    margin-bottom: $spacing-xs;
 }
 
 .cardValue {
@@ -40,7 +44,7 @@
 .grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr 1fr 1fr;
-    gap: 16px;
+    gap: $spacing-md;
 
     @media (max-width: 1280px) {
         grid-template-columns: 1fr 1fr;

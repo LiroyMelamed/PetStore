@@ -3,12 +3,12 @@
 
 .grid {
     display: grid;
-    gap: $space;
+    gap: $spacing-md;
 }
 
 .cards {
     display: grid;
-    gap: $space;
+    gap: $spacing-md;
     grid-template-columns: repeat(3, 1fr);
 
     @media (max-width: $bp-md) {
@@ -22,7 +22,7 @@
 
 .card {
     @include card();
-    padding: 14px;
+    padding: $spacing-md;
 }
 
 .title {
@@ -32,8 +32,8 @@
 
 .img {
     width: 100%;
-    border-radius: 10px;
-    margin-top: 10px;
+    border-radius: $radius;
+    margin-top: $spacing-sm;
     object-fit: cover;
     aspect-ratio: 16/9;
     border: 1px solid $border;
@@ -42,12 +42,12 @@
 
 .row {
     display: flex;
-    gap: 10px;
+    gap: $spacing-sm;
     align-items: center;
-    margin-top: 10px;
+    margin-top: $spacing-sm;
 }
 
 .meta {
     color: $muted;
-    font-size: 12px;
+    font-size: $font-xs;
 }

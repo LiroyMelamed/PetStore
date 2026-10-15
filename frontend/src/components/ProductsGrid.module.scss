@@ -1,0 +1,65 @@
+@use "../styles/variables" as *;
+@use "../styles/mixins" as *;
+
+.container {
+    width: 100%;
+    padding: $spacing-md;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    @include respond-to($bp-sm) {
+        padding: $spacing-lg;
+    }
+
+    @include respond-to($bp-lg) {
+        max-width: 1400px;
+        padding: $spacing-xl;
+    }
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: $spacing-md;
+    width: 100%;
+    box-sizing: border-box;
+
+    /* Small tablet: 3 columns */
+    @include respond-to($bp-sm) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-lg;
+    }
+
+    /* Tablet: 4 columns */
+    @include respond-to($bp-md) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: $spacing-lg;
+    }
+
+    /* Desktop: 5 columns */
+    @include respond-to($bp-lg) {
+        grid-template-columns: repeat(5, 1fr);
+        gap: $spacing-xl;
+    }
+
+    /* Extra large: Keep 5 columns */
+    @include respond-to($bp-2xl) {
+        grid-template-columns: repeat(5, 1fr);
+        gap: $spacing-xl;
+    }
+}
+
+.gridItem {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+
+    >* {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        max-height: 13rem;
+    }
+}

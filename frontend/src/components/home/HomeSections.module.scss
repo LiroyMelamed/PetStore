@@ -2,26 +2,412 @@
 @use "../../styles/mixins" as *;
 
 .section {
-    margin: 28px 0;
+    margin: $spacing-2xl 0;
+    padding: 0 $spacing-md;
+    width: 100%;
+    box-sizing: border-box;
+
+    @include respond-to($bp-sm) {
+        padding: 0 $spacing-lg;
+        margin: $spacing-3xl 0;
+    }
+
+    @include respond-to($bp-lg) {
+        padding: 0 $spacing-xl;
+        max-width: 1400px;
+        margin: $spacing-3xl auto;
+    }
 }
 
 .sectionHeader {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 0 0 12px;
+    margin: 0 0 $spacing-md;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
 
     h2 {
-        font-size: 1.25rem;
+        font-size: $font-lg;
         font-weight: 800;
         margin: 0;
         color: $text;
+
+        @include respond-to($bp-md) {
+            font-size: $font-xl;
+        }
     }
 }
 
 /* HERO */
 .hero {
-    margin: 16px 0 24px;
+    margin: $spacing-md 0 $spacing-xl;
+    border-radius: $radius;
+    overflow: hidden;
+    background: #FFF;
+    border: 1px solid $border;
+    box-shadow: $shadow;
+    width: 100%;
+    box-sizing: border-box;
+
+    @include respond-to($bp-sm) {
+        margin: $spacing-lg 0 $spacing-2xl;
+    }
+
+    .slick-dots {
+        bottom: $spacing-xs;
+
+        li button:before {
+            font-size: 10px;
+            color: $brand;
+            opacity: .6;
+        }
+
+        li.slick-active button:before {
+            color: $brand;
+            opacity: 1;
+        }
+    }
+}
+
+.heroSlide,
+.heroBanner {
+    display: block;
+
+    img {
+        width: 100%;
+        height: clamp(160px, 35vw, 400px);
+        object-fit: cover;
+        display: block;
+    }
+}
+
+/* PRODUCTS slider - now use CSS Grid for responsive */
+.productsSlider {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: $spacing-md;
+    width: 100%;
+    box-sizing: border-box;
+
+    @include respond-to($bp-sm) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-lg;
+    }
+
+    @include respond-to($bp-md) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: $spacing-lg;
+    }
+
+    @include respond-to($bp-lg) {
+        grid-template-columns: repeat(5, 1fr);
+        gap: $spacing-xl;
+    }
+
+    .slick-slide {
+        padding: 0 !important;
+    }
+}
+
+.productCard {
+    @include card();
+    border-radius: $radius;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+    height: 100%;
+    max-height: 13rem;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(17, 24, 39, .08);
+    }
+}
+
+.productThumb {
+    background: #FAFBFC;
+    border-bottom: 1px solid $border;
+    display: grid;
+    place-items: center;
+    height: clamp(100px, 25vw, 180px);
+    flex-shrink: 0;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}
+
+.productInfo {
+    padding: $spacing-md;
+    display: grid;
+    gap: $spacing-xs;
+    flex-grow: 1;
+}
+
+.productName {
+    font-weight: 700;
+    line-height: 1.25;
+    min-height: 2.4em;
+    color: $text;
+    font-size: $font-sm;
+
+    @include respond-to($bp-md) {
+        font-size: $font-base;
+    }
+}
+
+.productPrice {
+    color: $brand;
+    font-weight: 800;
+    font-size: $font-base;
+
+    .currency {
+        color: $muted;
+        font-weight: 600;
+        margin-inline-start: 4px;
+    }
+}
+
+/* CATEGORIES slider */
+.categoriesSlider {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: $spacing-md;
+    width: 100%;
+    box-sizing: border-box;
+
+    @include respond-to($bp-sm) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-lg;
+    }
+
+    @include respond-to($bp-md) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: $spacing-lg;
+    }
+
+    @include respond-to($bp-lg) {
+        grid-template-columns: repeat(5, 1fr);
+        gap: $spacing-xl;
+    }
+
+    :global(.slick-list) {
+        overflow: visible;
+        padding: 0 !important;
+    }
+}
+
+.catSlide {
+    padding: 0 !important;
+}
+
+.categoryCube {
+    background: #FFF;
+    border: 1px solid $border;
+    border-radius: $radius;
+    padding: $spacing-lg;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: $shadow;
+    transition: transform .15s ease, box-shadow .15s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-md;
+    height: 100%;
+    max-height: 13rem;
+    box-sizing: border-box;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(17, 24, 39, .08);
+    }
+}
+
+.categoryIcon {
+    width: 3rem;
+    height: 3rem;
+    border-radius: $radius;
+    display: grid;
+    place-items: center;
+    background: #FFF7ED;
+    font-size: $font-2xl;
+    flex-shrink: 0;
+}
+
+.categoryName {
+    font-weight: 700;
+    color: $text;
+    white-space: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+    font-size: $font-sm;
+}
+
+/* BRANDS */
+.brandsSlider {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: $spacing-md;
+    width: 100%;
+    box-sizing: border-box;
+
+    @include respond-to($bp-sm) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: $spacing-lg;
+    }
+
+    @include respond-to($bp-md) {
+        grid-template-columns: repeat(4, 1fr);
+        gap: $spacing-lg;
+    }
+
+    @include respond-to($bp-lg) {
+        grid-template-columns: repeat(5, 1fr);
+        gap: $spacing-xl;
+    }
+
+    .slick-slide {
+        padding: 0 !important;
+    }
+}
+
+.brandTile {
+    background: #FFF;
+    border: 1px solid $border;
+    border-radius: $radius;
+    padding: $spacing-md;
+    display: grid;
+    place-items: center;
+    min-height: 6rem;
+    max-height: 13rem;
+    box-shadow: $shadow;
+    transition: transform .15s ease, box-shadow .15s ease;
+    box-sizing: border-box;
+
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 34px rgba(17, 24, 39, .08);
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: grayscale(.25);
+    }
+}
+
+/* FOOTER (light) */
+.footer {
+    margin-top: $spacing-2xl;
+    border-top: 1px solid $border;
+    background: #FFFFFF;
+    box-shadow: 0 -6px 16px rgba(17, 24, 39, .04);
+    padding: 0 $spacing-md;
+    box-sizing: border-box;
+
+    @include respond-to($bp-sm) {
+        padding: 0 $spacing-lg;
+    }
+
+    @include respond-to($bp-lg) {
+        padding: 0 $spacing-xl;
+    }
+}
+
+.footerGrid {
+    display: grid;
+    gap: $spacing-md;
+    grid-template-columns: 1fr;
+    padding: $spacing-2xl 0;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 100%;
+
+    @include respond-to($bp-sm) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: $spacing-lg;
+    }
+
+    @include respond-to($bp-md) {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: $spacing-lg;
+    }
+
+    ul {
+        margin: $spacing-xs 0 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            margin: $spacing-xs 0;
+        }
+
+        a {
+            color: $muted;
+            transition: color .2s ease;
+
+            &:hover {
+                color: $brand;
+            }
+        }
+    }
+}
+
+.footerBrand {
+    font-weight: 900;
+    font-size: $font-2xl;
+    color: $text;
+}
+
+.footerDesc {
+    color: $muted;
+    margin: $spacing-xs 0 0;
+    font-size: $font-sm;
+}
+
+.footerTitle {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: $font-xs;
+    color: $muted;
+    letter-spacing: 0.06em;
+    margin-bottom: $spacing-sm;
+}
+
+.footerBottom {
+    border-top: 1px solid $border;
+    padding: $spacing-md 0 $spacing-lg;
+    display: flex;
+    gap: $spacing-sm;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    color: $muted;
+    font-size: $font-xs;
+    max-width: 1400px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+/* HERO */
+.hero {
+    margin: $spacing-md 0 $spacing-xl;
     border-radius: 20px;
     overflow: hidden;
     background: #FFF;
@@ -29,7 +415,7 @@
     box-shadow: $shadow;
 
     .slick-dots {
-        bottom: 8px;
+        bottom: $spacing-xs;
 
         li button:before {
             font-size: 10px;
@@ -59,13 +445,13 @@
 /* PRODUCTS slider */
 .productsSlider {
     .slick-slide {
-        padding: 6px;
+        padding: $spacing-xs;
     }
 }
 
 .productCard {
     @include card();
-    border-radius: 16px;
+    border-radius: $radius;
     overflow: hidden;
     cursor: pointer;
     transition: transform .15s ease, box-shadow .15s ease;
@@ -92,9 +478,9 @@
 }
 
 .productInfo {
-    padding: 12px 14px;
+    padding: $spacing-md $spacing-md;
     display: grid;
-    gap: 8px;
+    gap: $spacing-xs;
 }
 
 .productName {
@@ -173,15 +559,15 @@
 /* BRANDS */
 .brandsSlider {
     .slick-slide {
-        padding: 6px;
+        padding: $spacing-xs;
     }
 }
 
 .brandTile {
     background: #FFF;
     border: 1px solid $border;
-    border-radius: 16px;
-    padding: 10px;
+    border-radius: $radius;
+    padding: $spacing-sm;
     display: grid;
     place-items: center;
     height: 96px;
@@ -197,7 +583,7 @@
 
 /* FOOTER (light) */
 .footer {
-    margin-top: 36px;
+    margin-top: $spacing-2xl;
     border-top: 1px solid $border;
     background: #FFFFFF;
     box-shadow: 0 -6px 16px rgba(17, 24, 39, .04);
@@ -205,9 +591,9 @@
 
 .footerGrid {
     display: grid;
-    gap: 16px;
+    gap: $spacing-md;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    padding: 28px 0;
+    padding: $spacing-2xl 0;
 
     @media (max-width: $bp-md) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -218,12 +604,12 @@
     }
 
     ul {
-        margin: 8px 0 0;
+        margin: $spacing-xs 0 0;
         padding: 0;
         list-style: none;
 
         li {
-            margin: 6px 0;
+            margin: $spacing-xs 0;
         }
 
         a {
@@ -244,23 +630,23 @@
 
 .footerDesc {
     color: $muted;
-    margin: 8px 0 0;
+    margin: $spacing-xs 0 0;
 }
 
 .footerTitle {
     font-weight: 800;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: $font-xs;
     color: $muted;
     letter-spacing: .06em;
 }
 
 .footerBottom {
     border-top: 1px solid $border;
-    padding: 12px 0 18px;
+    padding: $spacing-md 0 $spacing-lg;
     display: flex;
-    gap: 10px;
+    gap: $spacing-sm;
     justify-content: space-between;
     color: $muted;
-    font-size: 12px;
+    font-size: $font-xs;
 }

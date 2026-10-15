@@ -1,3 +1,4 @@
+// ===== COLOR VARIABLES =====
 $bg: #F7F9FC; // page background
 $panel: #FFFFFF; // cards/panels
 $muted: #6B7280; // secondary text
@@ -8,10 +9,44 @@ $brand-2: #FF8A4C; // orange gradient end / hover
 
 $danger: #EF4444;
 $border: #E5E7EB;
-$radius: 14px;
-$space: 14px;
-$shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
 
-$bp-sm: 640px;
-$bp-md: 960px;
-$bp-lg: 1200px;
+// ===== FONT SIZE SCALE (in REM) =====
+// Base font size: 16px = 1rem
+$font-xs: 0.75rem; // 12px
+$font-sm: 0.875rem; // 14px
+$font-base: 1rem; // 16px
+$font-lg: 1.125rem; // 18px
+$font-xl: 1.25rem; // 20px
+$font-2xl: 1.5rem; // 24px
+$font-3xl: 1.875rem; // 30px
+$font-4xl: 2.25rem; // 36px
+
+// ===== SPACING SCALE (in REM) =====
+// Base spacing unit: 0.25rem (4px)
+$spacing-xs: 0.25rem; // 4px
+$spacing-sm: 0.5rem; // 8px
+$spacing-md: 0.875rem; // 14px
+$spacing-lg: 1rem; // 16px
+$spacing-xl: 1.5rem; // 24px
+$spacing-2xl: 2rem; // 32px
+$spacing-3xl: 2.5rem; // 40px
+$spacing-4xl: 3rem; // 48px
+
+// Legacy spacing (converts to rem)
+$space: 0.875rem; // 14px
+$radius: 0.875rem; // 14px
+$shadow: 0 0.625rem 1.875rem rgba(17, 24, 39, 0.06); // 0 10px 30px
+
+// ===== RESPONSIVE BREAKPOINTS (REM-based) =====
+$bp-xs: 0rem; // 0px - mobile first
+$bp-sm: 40rem; // 640px
+$bp-md: 60rem; // 960px
+$bp-lg: 75rem; // 1200px
+$bp-xl: 90rem; // 1440px
+$bp-2xl: 120rem; // 1920px
+
+// ===== RESPONSIVE CONTAINER PADDING =====
+$container-px-xs: 1rem; // 16px
+$container-px-sm: 1.5rem; // 24px
+$container-px-md: 2rem; // 32px
+$container-px-lg: 3rem; // 48px

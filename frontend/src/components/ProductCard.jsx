@@ -16,7 +16,7 @@ export default function ProductCard({ product, onClick }) {
                 borderRadius: 4,
                 boxShadow: 3,
                 height: "100%",
-                width: "13rem",
+                maxWidth: "13rem",
                 display: "flex",
                 flexDirection: "column",
             }}

@@ -12,8 +12,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { CartProvider } from './context/CartContext.jsx';
 import "./styles/global.scss";
+import "./styles/_responsive.scss";
+import i18n from './i18n.js';
 
-// פונקציה ליצירת cache עם תמיכה ב-RTL, תלוי בשפה
+// Create emotion cache with RTL support for Hebrew
 const createEmotionCache = (isRtl) => {
   if (isRtl) {
     return createCache({
@@ -26,9 +28,28 @@ const createEmotionCache = (isRtl) => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-// מצב ראשוני: קבע את כיוון הטקסט על פי השפה הנוכחית
-const isRtl = localStorage.getItem('i18nextLng') === 'he';
+// Initial state: set text direction based on language
+const setupDirection = () => {
+  const lang = localStorage.getItem('i18nextLng') || 'en';
+  const isRtl = lang === 'he';
+
+  document.documentElement.lang = lang;
+  document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+  document.body.dir = isRtl ? 'rtl' : 'ltr';
+
+  return isRtl;
+};
+
+const isRtl = setupDirection();
 const cacheRtl = createEmotionCache(isRtl);
+
+// Update direction when language changes
+i18n.on('languageChanged', (lng) => {
+  const newIsRtl = lng === 'he';
+  document.documentElement.dir = newIsRtl ? 'rtl' : 'ltr';
+  document.body.dir = newIsRtl ? 'rtl' : 'ltr';
+  document.documentElement.lang = lng;
+});
 
 root.render(
   <React.StrictMode>
