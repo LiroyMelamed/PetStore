@@ -46,3 +46,11 @@ ehthumbs_vista.db
 .npm/
 .eslintcache
 .stylelintcache
+
+# Keep runtime configuration local.
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.template
